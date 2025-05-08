@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 from io import StringIO
 
-# secrets.toml에서 csv 데이터 불러오기
+# csv 데이터 불러오기
 df = pd.read_csv("data/gear_data.csv")
 gear_levels = df["Level"].tolist()
 
