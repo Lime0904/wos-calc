@@ -47,7 +47,7 @@ gear_parts_kor = {
     "Cudgel": "지팡이"
 }
 
-st.title("Chief Gear 부족 자원 계산기")
+st.title("영주 장비 자원 계산기")
 
 user_inputs = {}
 
