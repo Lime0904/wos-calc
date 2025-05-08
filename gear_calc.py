@@ -24,7 +24,6 @@ gear_parts_kor = {
     "Hat": "모자", "Coat": "상의", "Ring": "반지",
     "Watch": "시계", "Pants": "하의", "Cudgel": "지팡이"
 }
-level_labels = {level: level for level in gear_levels}
 
 st.title("치프 기어 부족 자원 계산기")
 
@@ -52,26 +51,27 @@ user_owned = {
     "Amber": res_cols[3].number_input("앰버", min_value=0, value=0),
 }
 
-# Optional package input
+# Optional: package input
+packages_df = pd.read_csv("data/packages.csv")
 with st.expander("선택사항: 패키지 구매 입력"):
     st.warning("⚠️ 패키지 데이터는 아직 업데이트가 필요한 예시입니다. 사용에 유의하세요!!")
-    packages_df = pd.read_csv("data/packages.csv")
     package_groups = {
         "Artisans": ["Sublime", "Exquisite", "Classic"],
         "Dawn Market": ["DawnMarket"]
     }
     user_package_inputs = {}
-
     for group, categories in package_groups.items():
         st.markdown(f"**{group}**")
         for cat in categories:
             for price in ["$5", "$10", "$20", "$50", "$100"]:
                 key = f"{cat}_{price}"
                 user_package_inputs[key] = st.number_input(f"{cat} {price}", min_value=0, step=1, key=key)
-        with st.expander("패키지 구성 보기", expanded=False):
-            st.dataframe(packages_df[packages_df["Category"].isin(categories)], use_container_width=True)
 
-# Calculate resource needs
+# ✅ Show package content outside of expander
+if st.checkbox("패키지 구성 보기"):
+    st.dataframe(packages_df, use_container_width=True)
+
+# Main calculation
 if st.button("부족 자원 계산"):
     total_needed = {k: 0 for k in user_owned}
 
@@ -84,18 +84,18 @@ if st.button("부족 자원 계산"):
             for k in total_needed:
                 total_needed[k] += resource_dict.get(level, {}).get(k, 0)
 
-    # Add package-provided resources
-    if 'packages_df' in locals():
-        for key, count in user_package_inputs.items():
-            if count > 0:
-                cat, price = key.split("_")
-                rows = packages_df[(packages_df["Category"] == cat) & (packages_df["Package"] == price)]
-                for _, row in rows.iterrows():
-                    res = row["Resource"]
-                    amt = row["Amount"] * count
-                    if res in total_needed:
-                        user_owned[res] += amt
+    # Add package resources
+    for key, count in user_package_inputs.items():
+        if count > 0:
+            cat, price = key.split("_")
+            rows = packages_df[(packages_df["Category"] == cat) & (packages_df["Package"] == price)]
+            for _, row in rows.iterrows():
+                res = row["Resource"]
+                amt = row["Amount"] * count
+                if res in total_needed:
+                    user_owned[res] += amt
 
+    # 결과 출력
     st.markdown("---")
     st.subheader("결과 요약")
     name_map = {"Design": "설계도면", "Alloy": "합금", "Polish": "윤활제", "Amber": "앰버"}
