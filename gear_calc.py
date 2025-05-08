@@ -17,6 +17,21 @@ resource_dict = {
     } for _, row in gear_df.iterrows()
 }
 
+# 등급 한국어 매핑
+level_labels = {
+    "Green": "고급", "Green 1*": "고급 1성",
+    "Blue": "레어", "Blue 1*": "레어 1성", "Blue 2*": "레어 2성", "Blue 3*": "레어 3성",
+    "Purple": "에픽", "Purple 1*": "에픽 1성", "Purple 2*": "에픽 2성", "Purple 3*": "에픽 3성",
+    "Purple T1": "에픽 T1", "Purple T1 1*": "에픽 T1 1성", "Purple T1 2*": "에픽 T1 2성", "Purple T1 3*": "에픽 T1 3성",
+    "Gold": "레전드", "Gold 1*": "레전드 1성", "Gold 2*": "레전드 2성", "Gold 3*": "레전드 3성",
+    "Gold T1": "레전드 T1", "Gold T1 1*": "레전드 T1 1성", "Gold T1 2*": "레전드 T1 2성", "Gold T1 3*": "레전드 T1 3성",
+    "Gold T2": "레전드 T2", "Gold T2 1*": "레전드 T2 1성", "Gold T2 2*": "레전드 T2 2성", "Gold T2 3*": "레전드 T2 3성",
+    "Legendary": "신화", "Legendary 1*": "신화 1성", "Legendary 2*": "신화 2성", "Legendary 3*": "신화 3성",
+    "Legendary T1": "신화 T1", "Legendary T1 1*": "신화 T1 1성", "Legendary T1 2*": "신화 T1 2성", "Legendary T1 3*": "신화 T1 3성",
+    "Legendary T2": "신화 T2", "Legendary T2 1*": "신화 T2 1성", "Legendary T2 2*": "신화 T2 2성", "Legendary T2 3*": "신화 T2 3성",
+    "Legendary T3": "신화 T3", "Legendary T3 1*": "신화 T3 1성", "Legendary T3 2*": "신화 T3 2성", "Legendary T3 3*": "신화 T3 3성",
+}
+
 # 병종별 부위 매핑
 gear_groups = {
     "방패병": ["Coat", "Pants"],
