@@ -3,8 +3,7 @@ import pandas as pd
 from io import StringIO
 
 # secrets.toml에서 csv 데이터 불러오기
-csv_data = st.secrets["gear_data"]["csv"]
-df = pd.read_csv(StringIO(csv_data))
+df = pd.read_csv("data/gear_data.csv")
 gear_levels = df["Level"].tolist()
 
 # 자원 딕셔너리
