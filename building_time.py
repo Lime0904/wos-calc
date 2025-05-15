@@ -16,8 +16,7 @@ build_time_df = load_data()
 st.title("🏗️ 건설 가속 계산기")
 st.markdown("목표하는 건물 레벨, 버프 정보를 입력하면 최종 건설 시간을 계산해줍니다.")
 
-with st.expander("📸 내 기본 건설 속도 확인 방법 가이드"):
-    st.image("data/build_speed_guide.png", caption="건설 속도 확인 위치 예시", use_container_width=True)
+with st.expander("📘 내 기본 건설 속도 확인 방법 가이드"):
     st.markdown("""
     **확인 경로:**  
     ▶️ 좌측 상단 프로필 옆 **주먹 아이콘** 클릭 → **보너스 보기** → **[발전] 탭** → **건설 속도 확인**
