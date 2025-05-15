@@ -42,4 +42,43 @@ with st.form("input_form"):
     st.subheader("🏗️ 건설 속도")
     cs = st.number_input("건설 속도 (Construction Speed %)", value=85.0, min_value=0.0) / 100
 
-    st.subheader("⚙
+    st.subheader("⚙️ 버프 설정")
+    row1 = st.columns(2)
+    with row1[0]:
+        boost = st.selectbox("중상주의 (Merc or Double Time 중 하나)", ["Yes", "No"], index=0)
+    with row1[1]:
+        vp = st.selectbox("VP 보너스", ["Yes", "No"], index=0)
+    hyena = st.selectbox("Builder's Aide (하이에나) %", [0, 5, 7, 9, 12, 15], index=5) / 100
+
+    submitted = st.form_submit_button("🧮 계산하기")
+
+if submitted:
+    # --- 계산 ---
+    filtered = build_time_df[(build_time_df["Building"] == building) &
+                             (build_time_df["Level"] >= start_level) &
+                             (build_time_df["Level"] <= end_level)]
+
+    total_secs = filtered["Seconds"].sum()
+    boost_bonus = 0.2 if boost == "Yes" else 0  # 중상주의 하나만 적용
+    vp_bonus = 0.1 if vp == "Yes" else 0
+
+    adjusted_secs = total_secs / (1 + cs + vp_bonus + hyena + boost_bonus)
+
+    def secs_to_str(secs):
+        d = int(secs // 86400)
+        h = int((secs % 86400) // 3600)
+        m = int((secs % 3600) // 60)
+        s = int(secs % 60)
+        return f"{d}d {h}:{m:02}:{s:02}"
+
+    st.markdown("---")
+    st.subheader("📤 계산 결과")
+    st.write("### ⏱️ 각 레벨별 건설 시간")
+    filtered_display = filtered.copy()
+    filtered_display["Seconds"] = filtered_display["Seconds"].astype(int)
+    filtered_display["시간"] = filtered_display["Seconds"].apply(secs_to_str)
+    st.dataframe(filtered_display[["Level", "시간"]].set_index("Level"), use_container_width=True)
+
+    st.write("### 🧮 총 건설 시간")
+    st.info(f"Unboosted Time: {secs_to_str(total_secs)}")
+    st.success(f"Adjusted Time: {secs_to_str(adjusted_secs)}")
