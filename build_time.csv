@@ -1,0 +1,447 @@
+level,numerical,Total,Building
+FC1,35,155520.0,War Academy
+FC1-1,36,155520.0,War Academy
+FC1-2,37,155520.0,War Academy
+FC1-3,38,155520.0,War Academy
+FC1-4,39,155520.0,War Academy
+FC2,40,155520.0,War Academy
+FC2-1,41,190080.0,War Academy
+FC2-2,42,190080.0,War Academy
+FC2-3,43,190080.0,War Academy
+FC2-4,44,190080.0,War Academy
+FC3,45,190080.0,War Academy
+FC3-1,46,207360.0,War Academy
+FC3-2,47,207360.0,War Academy
+FC3-3,48,207360.0,War Academy
+FC3-4,49,207360.0,War Academy
+FC4,50,207360.0,War Academy
+FC4-1,51,241920.0,War Academy
+FC4-2,52,241920.0,War Academy
+FC4-3,53,241920.0,War Academy
+FC4-4,54,241920.0,War Academy
+FC5,55,241920.0,War Academy
+FC5-1,56,259200.0,War Academy
+FC5-2,57,259200.0,War Academy
+FC5-3,58,259200.0,War Academy
+FC5-4,59,259200.0,War Academy
+FC6,60,259200.0,War Academy
+FC6-1,61,311040.0,War Academy
+FC6-2,62,311040.0,War Academy
+FC6-3,63,311040.0,War Academy
+FC6-4,64,311040.0,War Academy
+FC7,65,311040.0,War Academy
+FC7-1,66,345600.0,War Academy
+FC7-2,67,345600.0,War Academy
+FC7-3,68,345600.0,War Academy
+FC7-4,69,345600.0,War Academy
+FC8,70,345600.0,War Academy
+FC8-1,71,224640.0,War Academy
+FC8-2,72,224640.0,War Academy
+FC8-3,73,224640.0,War Academy
+FC8-4,74,224640.0,War Academy
+FC9,75,224640.0,War Academy
+FC9-1,76,345600.0,War Academy
+FC9-2,77,345600.0,War Academy
+FC9-3,78,345600.0,War Academy
+FC9-4,79,345600.0,War Academy
+FC10,80,345600.0,War Academy
+1,1,2.0,Marksman Camp
+2,2,9.0,Marksman Camp
+3,3,45.0,Marksman Camp
+4,4,135.0,Marksman Camp
+5,5,270.0,Marksman Camp
+6,6,540.0,Marksman Camp
+7,7,1080.0,Marksman Camp
+8,8,1620.0,Marksman Camp
+9,9,2430.0,Marksman Camp
+10,10,3240.0,Marksman Camp
+11,11,4050.0,Marksman Camp
+12,12,4860.0,Marksman Camp
+13,13,5940.0,Marksman Camp
+14,14,7560.0,Marksman Camp
+15,15,9720.0,Marksman Camp
+16,16,16440.0,Marksman Camp
+17,17,19740.0,Marksman Camp
+18,18,23700.0,Marksman Camp
+19,19,35550.0,Marksman Camp
+20,20,44430.0,Marksman Camp
+21,21,57750.0,Marksman Camp
+22,22,86640.0,Marksman Camp
+23,23,121320.0,Marksman Camp
+24,24,169860.0,Marksman Camp
+25,25,237780.0,Marksman Camp
+26,26,273420.0,Marksman Camp
+27,27,328140.0,Marksman Camp
+28,28,377340.0,Marksman Camp
+29,29,433980.0,Marksman Camp
+30,30,520800.0,Marksman Camp
+30-1,31,90720.0,Marksman Camp
+30-2,32,90720.0,Marksman Camp
+30-3,33,90720.0,Marksman Camp
+30-4,34,90720.0,Marksman Camp
+FC1,35,90720.0,Marksman Camp
+FC1-1,36,116640.0,Marksman Camp
+FC1-2,37,116640.0,Marksman Camp
+FC1-3,38,116640.0,Marksman Camp
+FC1-4,39,116640.0,Marksman Camp
+FC2,40,116640.0,Marksman Camp
+FC2-1,41,142560.0,Marksman Camp
+FC2-2,42,142560.0,Marksman Camp
+FC2-3,43,142560.0,Marksman Camp
+FC2-4,44,142560.0,Marksman Camp
+FC3,45,142560.0,Marksman Camp
+FC3-1,46,155520.0,Marksman Camp
+FC3-2,47,155520.0,Marksman Camp
+FC3-3,48,155520.0,Marksman Camp
+FC3-4,49,155520.0,Marksman Camp
+FC4,50,155520.0,Marksman Camp
+FC4-1,51,181440.0,Marksman Camp
+FC4-2,52,181440.0,Marksman Camp
+FC4-3,53,181440.0,Marksman Camp
+FC4-4,54,181440.0,Marksman Camp
+FC5,55,181440.0,Marksman Camp
+FC5-1,56,194400.0,Marksman Camp
+FC5-2,57,194400.0,Marksman Camp
+FC5-3,58,194400.0,Marksman Camp
+FC5-4,59,194400.0,Marksman Camp
+FC6,60,194400.0,Marksman Camp
+FC6-1,61,233280.0,Marksman Camp
+FC6-2,62,233280.0,Marksman Camp
+FC6-3,63,233280.0,Marksman Camp
+FC6-4,64,233280.0,Marksman Camp
+FC7,65,233280.0,Marksman Camp
+FC7-1,66,259200.0,Marksman Camp
+FC7-2,67,259200.0,Marksman Camp
+FC7-3,68,259200.0,Marksman Camp
+FC7-4,69,259200.0,Marksman Camp
+FC8,70,259200.0,Marksman Camp
+FC8-1,71,168480.0,Marksman Camp
+FC8-2,72,168480.0,Marksman Camp
+FC8-3,73,168480.0,Marksman Camp
+FC8-4,74,168480.0,Marksman Camp
+FC9,75,168480.0,Marksman Camp
+FC9-1,76,259200.0,Marksman Camp
+FC9-2,77,259200.0,Marksman Camp
+FC9-3,78,259200.0,Marksman Camp
+FC9-4,79,259200.0,Marksman Camp
+FC10,80,259200.0,Marksman Camp
+1,1,2.0,Lancer Camp
+2,2,9.0,Lancer Camp
+3,3,45.0,Lancer Camp
+4,4,135.0,Lancer Camp
+5,5,270.0,Lancer Camp
+6,6,540.0,Lancer Camp
+7,7,1080.0,Lancer Camp
+8,8,1620.0,Lancer Camp
+9,9,2430.0,Lancer Camp
+10,10,3240.0,Lancer Camp
+11,11,4050.0,Lancer Camp
+12,12,4860.0,Lancer Camp
+13,13,5940.0,Lancer Camp
+14,14,7560.0,Lancer Camp
+15,15,9720.0,Lancer Camp
+16,16,16440.0,Lancer Camp
+17,17,19740.0,Lancer Camp
+18,18,23700.0,Lancer Camp
+19,19,35550.0,Lancer Camp
+20,20,44430.0,Lancer Camp
+21,21,57750.0,Lancer Camp
+22,22,86640.0,Lancer Camp
+23,23,121320.0,Lancer Camp
+24,24,169860.0,Lancer Camp
+25,25,237780.0,Lancer Camp
+26,26,273420.0,Lancer Camp
+27,27,328140.0,Lancer Camp
+28,28,377340.0,Lancer Camp
+29,29,433980.0,Lancer Camp
+30,30,520800.0,Lancer Camp
+30-1,31,90720.0,Lancer Camp
+30-2,32,90720.0,Lancer Camp
+30-3,33,90720.0,Lancer Camp
+30-4,34,90720.0,Lancer Camp
+FC1,35,90720.0,Lancer Camp
+FC1-1,36,116640.0,Lancer Camp
+FC1-2,37,116640.0,Lancer Camp
+FC1-3,38,116640.0,Lancer Camp
+FC1-4,39,116640.0,Lancer Camp
+FC2,40,116640.0,Lancer Camp
+FC2-1,41,142560.0,Lancer Camp
+FC2-2,42,142560.0,Lancer Camp
+FC2-3,43,142560.0,Lancer Camp
+FC2-4,44,142560.0,Lancer Camp
+FC3,45,142560.0,Lancer Camp
+FC3-1,46,155520.0,Lancer Camp
+FC3-2,47,155520.0,Lancer Camp
+FC3-3,48,155520.0,Lancer Camp
+FC3-4,49,155520.0,Lancer Camp
+FC4,50,155520.0,Lancer Camp
+FC4-1,51,181440.0,Lancer Camp
+FC4-2,52,181440.0,Lancer Camp
+FC4-3,53,181440.0,Lancer Camp
+FC4-4,54,181440.0,Lancer Camp
+FC5,55,181440.0,Lancer Camp
+FC5-1,56,194400.0,Lancer Camp
+FC5-2,57,194400.0,Lancer Camp
+FC5-3,58,194400.0,Lancer Camp
+FC5-4,59,194400.0,Lancer Camp
+FC6,60,194400.0,Lancer Camp
+FC6-1,61,233280.0,Lancer Camp
+FC6-2,62,233280.0,Lancer Camp
+FC6-3,63,233280.0,Lancer Camp
+FC6-4,64,233280.0,Lancer Camp
+FC7,65,233280.0,Lancer Camp
+FC7-1,66,259200.0,Lancer Camp
+FC7-2,67,259200.0,Lancer Camp
+FC7-3,68,259200.0,Lancer Camp
+FC7-4,69,259200.0,Lancer Camp
+FC8,70,259200.0,Lancer Camp
+FC8-1,71,168480.0,Lancer Camp
+FC8-2,72,168480.0,Lancer Camp
+FC8-3,73,168480.0,Lancer Camp
+FC8-4,74,168480.0,Lancer Camp
+FC9,75,168480.0,Lancer Camp
+FC9-1,76,259200.0,Lancer Camp
+FC9-2,77,259200.0,Lancer Camp
+FC9-3,78,259200.0,Lancer Camp
+FC9-4,79,259200.0,Lancer Camp
+FC10,80,259200.0,Lancer Camp
+1,1,2.0,Infantry Camp
+2,2,9.0,Infantry Camp
+3,3,45.0,Infantry Camp
+4,4,135.0,Infantry Camp
+5,5,270.0,Infantry Camp
+6,6,540.0,Infantry Camp
+7,7,1080.0,Infantry Camp
+8,8,1620.0,Infantry Camp
+9,9,2430.0,Infantry Camp
+10,10,3240.0,Infantry Camp
+11,11,4050.0,Infantry Camp
+12,12,4860.0,Infantry Camp
+13,13,5940.0,Infantry Camp
+14,14,7560.0,Infantry Camp
+15,15,9720.0,Infantry Camp
+16,16,16440.0,Infantry Camp
+17,17,19740.0,Infantry Camp
+18,18,23700.0,Infantry Camp
+19,19,35550.0,Infantry Camp
+20,20,44430.0,Infantry Camp
+21,21,57750.0,Infantry Camp
+22,22,86640.0,Infantry Camp
+23,23,121320.0,Infantry Camp
+24,24,169860.0,Infantry Camp
+25,25,237780.0,Infantry Camp
+26,26,273420.0,Infantry Camp
+27,27,328140.0,Infantry Camp
+28,28,377340.0,Infantry Camp
+29,29,433980.0,Infantry Camp
+30,30,520800.0,Infantry Camp
+30-1,31,90720.0,Infantry Camp
+30-2,32,90720.0,Infantry Camp
+30-3,33,90720.0,Infantry Camp
+30-4,34,90720.0,Infantry Camp
+FC1,35,90720.0,Infantry Camp
+FC1-1,36,116640.0,Infantry Camp
+FC1-2,37,116640.0,Infantry Camp
+FC1-3,38,116640.0,Infantry Camp
+FC1-4,39,116640.0,Infantry Camp
+FC2,40,116640.0,Infantry Camp
+FC2-1,41,142560.0,Infantry Camp
+FC2-2,42,142560.0,Infantry Camp
+FC2-3,43,142560.0,Infantry Camp
+FC2-4,44,142560.0,Infantry Camp
+FC3,45,142560.0,Infantry Camp
+FC3-1,46,155520.0,Infantry Camp
+FC3-2,47,155520.0,Infantry Camp
+FC3-3,48,155520.0,Infantry Camp
+FC3-4,49,155520.0,Infantry Camp
+FC4,50,155520.0,Infantry Camp
+FC4-1,51,181440.0,Infantry Camp
+FC4-2,52,181440.0,Infantry Camp
+FC4-3,53,181440.0,Infantry Camp
+FC4-4,54,181440.0,Infantry Camp
+FC5,55,181440.0,Infantry Camp
+FC5-1,56,194400.0,Infantry Camp
+FC5-2,57,194400.0,Infantry Camp
+FC5-3,58,194400.0,Infantry Camp
+FC5-4,59,194400.0,Infantry Camp
+FC6,60,194400.0,Infantry Camp
+FC6-1,61,233280.0,Infantry Camp
+FC6-2,62,233280.0,Infantry Camp
+FC6-3,63,233280.0,Infantry Camp
+FC6-4,64,233280.0,Infantry Camp
+FC7,65,233280.0,Infantry Camp
+FC7-1,66,259200.0,Infantry Camp
+FC7-2,67,259200.0,Infantry Camp
+FC7-3,68,259200.0,Infantry Camp
+FC7-4,69,259200.0,Infantry Camp
+FC8,70,259200.0,Infantry Camp
+FC8-1,71,168480.0,Infantry Camp
+FC8-2,72,168480.0,Infantry Camp
+FC8-3,73,168480.0,Infantry Camp
+FC8-4,74,168480.0,Infantry Camp
+FC9,75,168480.0,Infantry Camp
+FC9-1,76,259200.0,Infantry Camp
+FC9-2,77,259200.0,Infantry Camp
+FC9-3,78,259200.0,Infantry Camp
+FC9-4,79,259200.0,Infantry Camp
+FC10,80,259200.0,Infantry Camp
+1,1,2.0,Infirmary
+2,2,9.0,Infirmary
+3,3,40.0,Infirmary
+4,4,125.0,Infirmary
+5,5,250.0,Infirmary
+6,6,500.0,Infirmary
+7,7,990.0,Infirmary
+8,8,1500.0,Infirmary
+9,9,1650.0,Infirmary
+10,10,3000.0,Infirmary
+11,11,3780.0,Infirmary
+12,12,4530.0,Infirmary
+13,13,5520.0,Infirmary
+14,14,7050.0,Infirmary
+15,15,9060.0,Infirmary
+16,16,15360.0,Infirmary
+17,17,18420.0,Infirmary
+18,18,22110.0,Infirmary
+19,19,33180.0,Infirmary
+20,20,41460.0,Infirmary
+21,21,53910.0,Infirmary
+22,22,80880.0,Infirmary
+23,23,113220.0,Infirmary
+24,24,158520.0,Infirmary
+25,25,221940.0,Infirmary
+26,26,255240.0,Infirmary
+27,27,306240.0,Infirmary
+28,28,352200.0,Infirmary
+29,29,405060.0,Infirmary
+30,30,486060.0,Infirmary
+30-1,31,84660.0,Infirmary
+30-2,32,84660.0,Infirmary
+30-3,33,84660.0,Infirmary
+30-4,34,84660.0,Infirmary
+FC1,35,84660.0,Infirmary
+FC1-1,36,108840.0,Infirmary
+FC1-2,37,108840.0,Infirmary
+FC1-3,38,108840.0,Infirmary
+FC1-4,39,108840.0,Infirmary
+FC2,40,108840.0,Infirmary
+FC2-1,41,133020.0,Infirmary
+FC2-2,42,133020.0,Infirmary
+FC2-3,43,133020.0,Infirmary
+FC2-4,44,133020.0,Infirmary
+FC3,45,133020.0,Infirmary
+FC3-1,46,145140.0,Infirmary
+FC3-2,47,145140.0,Infirmary
+FC3-3,48,145140.0,Infirmary
+FC3-4,49,145140.0,Infirmary
+FC4,50,145140.0,Infirmary
+FC4-1,51,169320.0,Infirmary
+FC4-2,52,169320.0,Infirmary
+FC4-3,53,169320.0,Infirmary
+FC4-4,54,169320.0,Infirmary
+FC5,55,169320.0,Infirmary
+FC5-1,56,181440.0,Infirmary
+FC5-2,57,181440.0,Infirmary
+FC5-3,58,181440.0,Infirmary
+FC5-4,59,181440.0,Infirmary
+FC6,60,181440.0,Infirmary
+FC6-1,61,217680.0,Infirmary
+FC6-2,62,217680.0,Infirmary
+FC6-3,63,217680.0,Infirmary
+FC6-4,64,217680.0,Infirmary
+FC7,65,217680.0,Infirmary
+FC7-1,66,217680.0,Infirmary
+FC7-2,67,241920.0,Infirmary
+FC7-3,68,241920.0,Infirmary
+FC7-4,69,241920.0,Infirmary
+FC8,70,241920.0,Infirmary
+FC8-1,71,157200.0,Infirmary
+FC8-2,72,157200.0,Infirmary
+FC8-3,73,157200.0,Infirmary
+FC8-4,74,157200.0,Infirmary
+FC9,75,157200.0,Infirmary
+FC9-1,76,241920.0,Infirmary
+FC9-2,77,241920.0,Infirmary
+FC9-3,78,241920.0,Infirmary
+FC9-4,79,241920.0,Infirmary
+FC10,80,241920.0,Infirmary
+1,1,2.0,Embassy
+2,2,10.0,Embassy
+3,3,60.0,Embassy
+4,4,120.0,Embassy
+5,5,400.0,Embassy
+6,6,800.0,Embassy
+7,7,1500.0,Embassy
+8,8,2700.0,Embassy
+9,9,7200.0,Embassy
+10,10,14250.0,Embassy
+11,11,17820.0,Embassy
+12,12,21360.0,Embassy
+13,13,26130.0,Embassy
+14,14,33240.0,Embassy
+15,15,42750.0,Embassy
+16,16,72420.0,Embassy
+17,17,86880.0,Embassy
+18,18,104280.0,Embassy
+19,19,156420.0,Embassy
+20,20,195540.0,Embassy
+21,21,254160.0,Embassy
+22,22,381300.0,Embassy
+23,23,533820.0,Embassy
+24,24,747360.0,Embassy
+25,25,1046280.0,Embassy
+26,26,1203240.0,Embassy
+27,27,1443900.0,Embassy
+28,28,1660500.0,Embassy
+29,29,1909560.0,Embassy
+30,30,2291520.0,Embassy
+30-1,31,399120.0,Embassy
+30-2,32,399120.0,Embassy
+30-3,33,399120.0,Embassy
+30-4,34,399120.0,Embassy
+FC1,35,399120.0,Embassy
+FC1-1,36,513180.0,Embassy
+FC1-2,37,513180.0,Embassy
+FC1-3,38,513180.0,Embassy
+FC1-4,39,513180.0,Embassy
+FC2,40,513180.0,Embassy
+FC2-1,41,627240.0,Embassy
+FC2-2,42,627240.0,Embassy
+FC2-3,43,627240.0,Embassy
+FC2-4,44,627240.0,Embassy
+FC3,45,627240.0,Embassy
+FC3-1,46,684240.0,Embassy
+FC3-2,47,684240.0,Embassy
+FC3-3,48,684240.0,Embassy
+FC3-4,49,684240.0,Embassy
+FC4,50,684240.0,Embassy
+FC4-1,51,798300.0,Embassy
+FC4-2,52,798300.0,Embassy
+FC4-3,53,798300.0,Embassy
+FC4-4,54,798300.0,Embassy
+FC5,55,798300.0,Embassy
+FC5-1,56,855360.0,Embassy
+FC5-2,57,855360.0,Embassy
+FC5-3,58,855360.0,Embassy
+FC5-4,59,855360.0,Embassy
+FC6,60,855360.0,Embassy
+FC6-1,61,1026420.0,Embassy
+FC6-2,62,1026420.0,Embassy
+FC6-3,63,1026420.0,Embassy
+FC6-4,64,1026420.0,Embassy
+FC7,65,1026420.0,Embassy
+FC7-1,66,1140480.0,Embassy
+FC7-2,67,1140480.0,Embassy
+FC7-3,68,1140480.0,Embassy
+FC7-4,69,1140480.0,Embassy
+FC8,70,1140480.0,Embassy
+FC8-1,71,741300.0,Embassy
+FC8-2,72,741300.0,Embassy
+FC8-3,73,741300.0,Embassy
+FC8-4,74,741300.0,Embassy
+FC9,75,741300.0,Embassy
+FC9-1,76,1140480.0,Embassy
+FC9-2,77,1140480.0,Embassy
+FC9-3,78,1140480.0,Embassy
+FC9-4,79,1140480.0,Embassy
+FC10,80,1140480.0,Embassy
