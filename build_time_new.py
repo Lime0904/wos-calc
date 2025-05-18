@@ -1,8 +1,10 @@
 import streamlit as st
 import pandas as pd
 
-st.set_page_config(page_title="건설 가속 계산기", layout="centered")
+# 📱 모바일 최적화를 위한 layout 설정
+st.set_page_config(page_title="건설 가속 계산기", layout="wide")
 
+# 🔁 FC 레벨 매핑
 fc_map = {
     1: "1", 2: "2", 3: "3", 4: "4",
     5: "5", 6: "6", 7: "7", 8: "8",
@@ -25,7 +27,6 @@ fc_map = {
     80: "FC10"
 }
 
-
 ordered_buildings = [
     "Furnace", "Embassy", "Command Center", "Infantry Camp",
     "Lancer Camp", "Marksman Camp", "War Academy", "Infirmary", "Research Center"
@@ -40,6 +41,7 @@ def load_data():
 
 df = load_data()
 
+# 👷 레벨 리스트 추출
 level_dict = {
     b: df[df["Building"] == b][["fc_level", "numerical"]]
     .drop_duplicates()
@@ -48,50 +50,52 @@ level_dict = {
     for b in ordered_buildings if b in df["Building"].unique()
 }
 
-st.title("\U0001f3d7️ 건설 가속 계산기")
-st.caption("도달 목표 레벨에 해당하는 시간만 계산합니다.")
+# 🎯 타이틀
+st.title("🏗️ 건설 가속 계산기")
+st.caption("목표 구간만 계산됩니다. 건물별로 현재와 목표 레벨을 선택하세요.")
 
 selected_levels = {}
 
+# 🏠 건물별 입력 섹션
 with st.container():
-    st.markdown("### \U0001f9f1 건설 목표")
+    st.markdown("### 🎯 건설 목표")
+
     for b in ordered_buildings:
         if b not in level_dict:
             continue
 
-        lv_df = level_dict[b].sort_values("numerical").reset_index(drop=True)
+        lv_df = level_dict[b]
         level_list = lv_df["fc_level"].tolist()
         default_idx = next((i for i, v in enumerate(level_list) if "FC7" in v), 0)
 
-        st.markdown(f"**\U0001f3db {b}**")
-        col1, col2 = st.columns(2)
-        with col1:
-            start = st.selectbox(f"{b} 현재 레벨", level_list, index=default_idx, key=f"{b}_start")
-        with col2:
-            end = st.selectbox(f"{b} 목표 레벨", level_list, index=default_idx, key=f"{b}_end")
+        with st.expander(f"🏗️ {b}"):
+            start = st.selectbox("현재", level_list, index=default_idx, key=f"{b}_start")
+            end = st.selectbox("목표", level_list, index=default_idx, key=f"{b}_end")
 
-        if start != end:
-            selected_levels[b] = (start, end)
+            if start != end:
+                selected_levels[b] = (start, end)
 
+# 🚀 버프 입력
 with st.container():
-    st.markdown("### \U0001f9f0 버프 입력")
+    st.markdown("### 🧪 버프 입력")
     cs = st.number_input("기본 건설 속도 (%)", value=85.0) / 100
     boost = st.selectbox("중상주의 (Double Time)", ["Yes", "No"], index=0)
     vp = st.selectbox("VP 보너스", ["Yes", "No"], index=0)
     hyena = st.selectbox("하이에나 보너스 (%)", [0, 5, 7, 9, 12, 15], index=5) / 100
 
+# 🧭 가이드
 with st.expander("📘 내 기본 건설 속도 확인 방법 가이드"):
-        st.markdown("""
-        **확인 경로:**  
-        ▶️ 좌측 상단 프로필 옆 **주먹 아이콘** 클릭 → **보너스 보기** → **[발전] 탭** → **건설 속도 확인**
+    st.markdown("""
+    **확인 경로:**  
+    ▶️ 좌측 상단 프로필 옆 **주먹 아이콘** 클릭 → **보너스 보기** → **[발전] 탭** → **건설 속도 확인**
 
-        ℹ️ 참고: **집행관 버프**가 적용되어 있을 경우 이 수치에 포함되어 표시됩니다.
-        """)
+    ℹ️ 참고: **집행관 버프**가 적용되어 있을 경우 이 수치에 포함되어 표시됩니다.
+    """)
 
+# 🧮 계산 버튼
+submitted = st.button("🧮 계산하기")
 
-# 버튼은 폼 외부로 이동
-submitted = st.button("\U0001f9ee 계산하기")
-
+# 🧾 결과 처리
 if submitted:
     def secs_to_str(secs):
         d = int(secs // 86400)
@@ -108,9 +112,9 @@ if submitted:
 
         for b, (start_fc, end_fc) in selected_levels.items():
             lv_df = level_dict[b]
-            end_num = lv_df[lv_df["fc_level"].astype(str) == str(end_fc)]["numerical"].values[0]
-
-            sub_df = df[(df["Building"] == b) & (df["numerical"] == end_num)]
+            end_num = lv_df[lv_df["fc_level"] == end_fc]["numerical"].values[0]
+            start_num = lv_df[lv_df["fc_level"] == start_fc]["numerical"].values[0]
+            sub_df = df[(df["Building"] == b) & (df["numerical"] > start_num) & (df["numerical"] <= end_num)]
             subtotal = sub_df["Total"].sum()
             total += subtotal
             per_building_result[b] = subtotal
@@ -128,4 +132,3 @@ if submitted:
             for b in ordered_buildings:
                 if b in per_building_result:
                     st.markdown(f"- **{b}**: {secs_to_str(per_building_result[b])}")
-
