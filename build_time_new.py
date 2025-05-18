@@ -1,11 +1,10 @@
 import streamlit as st
 import pandas as pd
-import os
 
 # --- 페이지 설정 ---
 st.set_page_config(page_title="건설 가속 계산기", layout="centered")
 
-# --- FC 레벨 매핑 (코드 내 포함)
+# --- FC 레벨 매핑 (내부 포함)
 fc_map = {
     35: "FC1", 36: "FC1-1", 37: "FC1-2", 38: "FC1-3",
     39: "FC2", 40: "FC2-1", 41: "FC2-2", 42: "FC2-3",
@@ -33,7 +32,10 @@ df = load_data()
 
 # --- 레벨 목록 구성 ---
 level_dict = {
-    b: df[df["Building"] == b][["fc_level", "numerical"]].drop_duplicates().sort_values("numerical").reset_index(drop=True)
+    b: df[df["Building"] == b][["fc_level", "numerical"]]
+    .drop_duplicates()
+    .sort_values("numerical")
+    .reset_index(drop=True)
     for b in df["Building"].unique()
 }
 
@@ -46,8 +48,12 @@ selected_levels = {}
 with st.form("build_form"):
     for b in level_dict:
         lv_df = level_dict[b]
-        level_list = lv_df["fc_level"].tolist()
-        default_idx = lv_df[lv_df["fc_level"].str.contains("FC7")].index[0] if any(lv_df["fc_level"].str.contains("FC7")) else 0
+        level_list = lv_df["fc_level"].astype(str).tolist()
+
+        if any("FC7" in lv for lv in level_list):
+            default_idx = next(i for i, v in enumerate(level_list) if "FC7" in v)
+        else:
+            default_idx = 0
 
         st.markdown(f"**🏛 {b}**")
         col1, col2 = st.columns(2)
@@ -84,8 +90,8 @@ if submitted:
 
         for b, (start_fc, end_fc) in selected_levels.items():
             lv_df = level_dict[b]
-            start_num = lv_df[lv_df["fc_level"] == start_fc]["numerical"].values[0]
-            end_num = lv_df[lv_df["fc_level"] == end_fc]["numerical"].values[0]
+            start_num = lv_df[lv_df["fc_level"].astype(str) == str(start_fc)]["numerical"].values[0]
+            end_num = lv_df[lv_df["fc_level"].astype(str) == str(end_fc)]["numerical"].values[0]
 
             sub_df = df[
                 (df["Building"] == b) &
@@ -103,11 +109,11 @@ if submitted:
             st.dataframe(sub_df[["fc_level", "시간"]].set_index("fc_level"), use_container_width=True)
             st.markdown(f"🔹 구간 총 시간: `{secs_to_str(subtotal)}`")
 
-        # 최종 Adjusted
+        # 버프 반영
         boost_bonus = 0.2 if boost == "Yes" else 0
         vp_bonus = 0.1 if vp == "Yes" else 0
         adjusted = total / (1 + cs + vp_bonus + hyena + boost_bonus)
 
         st.markdown("### 🧮 총 건설 시간")
-        st.info(f"Unboosted Time: {secs_to_str(total)}")
-        st.success(f"Adjusted Time: {secs_to_str(adjusted)}")
+        st.info(f"🕒 Unboosted Time: {secs_to_str(total)}")
+        st.success(f"⚡ Adjusted Time: {secs_to_str(adjusted)}")
