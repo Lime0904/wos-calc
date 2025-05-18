@@ -27,10 +27,20 @@ fc_map = {
     80: "FC10"
 }
 
-ordered_buildings = [
-    "Furnace", "Embassy", "Command Center", "Infantry Camp",
-    "Lancer Camp", "Marksman Camp", "War Academy", "Infirmary", "Research Center"
-]
+# 영어 → 한글 병기 이름 (War Academy만 변경)
+building_labels = {
+    "Furnace": "Furnace (용광로)",
+    "Embassy": "Embassy (대사관)",
+    "Command Center": "Command Center (지휘부)",
+    "Infantry Camp": "Infantry Camp (방패병영)",
+    "Lancer Camp": "Lancer Camp (창병병영)",
+    "Marksman Camp": "Marksman Camp (궁병병영)",
+    "War Academy": "War Academy (전쟁아카데미)",
+    "Infirmary": "Infirmary (의무실)",
+    "Research Center": "Research Center (연구소)"
+}
+
+ordered_buildings = list(building_labels.keys())
 
 @st.cache_data
 def load_data():
@@ -41,7 +51,6 @@ def load_data():
 
 df = load_data()
 
-# 👷 레벨 리스트 추출
 level_dict = {
     b: df[df["Building"] == b][["fc_level", "numerical"]]
     .drop_duplicates()
@@ -50,13 +59,11 @@ level_dict = {
     for b in ordered_buildings if b in df["Building"].unique()
 }
 
-# 🎯 타이틀
 st.title("🏗️ 건설 가속 계산기")
 st.caption("목표 구간만 계산됩니다. 건물별로 현재와 목표 레벨을 선택하세요.")
 
 selected_levels = {}
 
-# 🏠 건물별 입력 섹션
 with st.container():
     st.markdown("### 🎯 건설 목표")
 
@@ -68,22 +75,20 @@ with st.container():
         level_list = lv_df["fc_level"].tolist()
         default_idx = next((i for i, v in enumerate(level_list) if "FC7" in v), 0)
 
-        with st.expander(f"🏗️ {b}"):
+        with st.expander(f"🏗️ {building_labels[b]}"):
             start = st.selectbox("현재", level_list, index=default_idx, key=f"{b}_start")
             end = st.selectbox("목표", level_list, index=default_idx, key=f"{b}_end")
 
             if start != end:
                 selected_levels[b] = (start, end)
 
-# 🚀 버프 입력
 with st.container():
     st.markdown("### 🧪 버프 입력")
-    cs = st.number_input("기본 건설 속도 (%)", value=85.0) / 100
+    cs = st.number_input("기본 건설 속도(Your Constr Speed) (%)", value=85.0) / 100
     boost = st.selectbox("중상주의 (Double Time)", ["Yes", "No"], index=0)
     vp = st.selectbox("VP 보너스", ["Yes", "No"], index=0)
-    hyena = st.selectbox("하이에나 보너스 (%)", [0, 5, 7, 9, 12, 15], index=5) / 100
+    hyena = st.selectbox("하이에나 보너스(Pet Skill) (%)", [0, 5, 7, 9, 12, 15], index=5) / 100
 
-# 🧭 가이드
 with st.expander("📘 내 기본 건설 속도 확인 방법 가이드"):
     st.markdown("""
     **확인 경로:**  
@@ -92,10 +97,8 @@ with st.expander("📘 내 기본 건설 속도 확인 방법 가이드"):
     ℹ️ 참고: **집행관 버프**가 적용되어 있을 경우 이 수치에 포함되어 표시됩니다.
     """)
 
-# 🧮 계산 버튼
 submitted = st.button("🧮 계산하기")
 
-# 🧾 결과 처리
 if submitted:
     def secs_to_str(secs):
         d = int(secs // 86400)
@@ -131,4 +134,4 @@ if submitted:
             st.info(f"🕒 총합: {secs_to_str(total)}")
             for b in ordered_buildings:
                 if b in per_building_result:
-                    st.markdown(f"- **{b}**: {secs_to_str(per_building_result[b])}")
+                    st.markdown(f"- **{building_labels[b]}**: {secs_to_str(per_building_result[b])}")
