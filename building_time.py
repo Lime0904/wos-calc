@@ -7,7 +7,7 @@ st.set_page_config(page_title="건설 가속 계산기", layout="centered")
 # --- 데이터 불러오기 ---
 @st.cache_data
 def load_data():
-    df = pd.read_csv("build_time_clean.csv")
+    df = pd.read_csv("data/build_time_clean.csv")
     return df
 
 build_time_df = load_data()
