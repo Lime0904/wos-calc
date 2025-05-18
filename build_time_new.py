@@ -62,7 +62,7 @@ with st.form("build_form"):
         if b not in level_dict:
             continue
 
-        lv_df = level_dict[b]
+        lv_df = level_dict[b].sort_values("numerical").reset_index(drop=True)
         level_list = lv_df["fc_level"].astype(str).tolist()
         default_idx = next((i for i, v in enumerate(level_list) if "FC7" in v), 0)
 
