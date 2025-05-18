@@ -1,32 +1,23 @@
 import streamlit as st
 import pandas as pd
 
-# --- 페이지 설정 ---
 st.set_page_config(page_title="건설 가속 계산기", layout="centered")
 
-# --- FC 레벨 매핑 (코드 내 포함)
 fc_map = {
-    1: "1", 2: "2", 3: "3", 4: "4",
-    5: "5", 6: "6", 7: "7", 8: "8",
-    9: "9", 10: "10", 11: "11", 12: "12",
-    13: "13", 14: "14", 15: "15", 16: "16",
-    17: "17", 18: "18", 19: "19", 20: "20",
-    21: "21", 22: "22", 23: "23", 24: "24",
-    25: "25", 26: "26", 27: "27", 28: "28",
-    29: "29", 30: "30", 31: "30-1", 32: "30-2",
-    33: "30-3", 34: "30-4",
-    35: "FC1", 36: "FC1-1", 37: "FC1-2", 38: "FC1-3", 39: "FC1-4",
-    40: "FC2", 41: "FC2-1", 42: "FC2-2", 43: "FC2-3", 44: "FC2-4",
-    45: "FC3", 46: "FC3-1", 47: "FC3-2", 48: "FC3-3", 49: "FC3-4",
-    50: "FC4", 51: "FC4-1", 52: "FC4-2", 53: "FC4-3", 54: "FC4-4",
-    55: "FC5", 56: "FC5-1", 57: "FC5-2", 58: "FC5-3", 59: "FC5-4",
-    60: "FC6", 61: "FC6-1", 62: "FC6-2", 63: "FC6-3", 64: "FC6-4",
-    65: "FC7", 66: "FC7-1", 67: "FC7-2", 68: "FC7-3", 69: "FC7-4",
-    70: "FC8", 71: "FC8-1", 72: "FC8-2", 73: "FC8-3", 74: "FC8-4",
-    75: "FC9", 76: "FC9-1", 77: "FC9-2", 78: "FC9-3", 79: "FC9-4",
-    80: "FC10"
+    1: "1", 2: "2", 3: "3", 4: "4", 5: "5", 6: "6", 7: "7", 8: "8",
+    9: "9", 10: "10", 11: "11", 12: "12", 13: "13", 14: "14", 15: "15", 16: "16",
+    17: "17", 18: "18", 19: "19", 20: "20", 21: "21", 22: "22", 23: "23", 24: "24",
+    25: "25", 26: "26", 27: "27", 28: "28", 29: "29", 30: "30", 30-1: "30-1",
+    30-2: "30-2", 30-3: "30-3", 30-4: "30-4", 35: "FC1", 36: "FC1-1", 37: "FC1-2",
+    38: "FC1-3", 39: "FC2", 40: "FC2-1", 41: "FC2-2", 42: "FC2-3", 43: "FC3",
+    44: "FC3-1", 45: "FC3-2", 46: "FC3-3", 47: "FC4", 48: "FC4-1", 49: "FC4-2",
+    50: "FC4-3", 51: "FC5", 52: "FC5-1", 53: "FC5-2", 54: "FC5-3", 55: "FC6",
+    56: "FC6-1", 57: "FC6-2", 58: "FC6-3", 59: "FC7", 60: "FC7-1", 61: "FC7-2",
+    62: "FC7-3", 63: "FC8", 64: "FC8-1", 65: "FC8-2", 66: "FC8-3", 67: "FC9",
+    68: "FC9-1", 69: "FC9-2", 70: "FC9-3", 71: "FC10", 72: "FC10-1", 73: "FC10-2",
+    74: "FC10-3", 75: "FC11", 76: "FC11-1", 77: "FC11-2", 78: "FC11-3",
+    79: "FC12", 80: "FC12-1"
 }
-
 
 ordered_buildings = [
     "Furnace", "Embassy", "Command Center", "Infantry Camp",
@@ -53,17 +44,16 @@ level_dict = {
 st.title("\U0001f3d7️ 건설 가속 계산기")
 st.caption("도달 목표 레벨에 해당하는 시간만 계산합니다.")
 
-st.markdown("### \U0001f9f1 건설 목표")
 selected_levels = {}
 
-with st.form("build_form"):
+with st.container():
+    st.markdown("### \U0001f9f1 건설 목표")
     for b in ordered_buildings:
         if b not in level_dict:
             continue
 
-        # numerical 기준 정렬된 fc_level 리스트 추출
         lv_df = level_dict[b].sort_values("numerical").reset_index(drop=True)
-        level_list = lv_df["fc_level"].tolist()  # <- 문자열 변환 없이 그대로 사용
+        level_list = lv_df["fc_level"].tolist()
         default_idx = next((i for i, v in enumerate(level_list) if "FC7" in v), 0)
 
         st.markdown(f"**\U0001f3db {b}**")
@@ -76,15 +66,15 @@ with st.form("build_form"):
         if start != end:
             selected_levels[b] = (start, end)
 
-    st.markdown("---")
+with st.container():
     st.markdown("### \U0001f9f0 버프 입력")
     cs = st.number_input("기본 건설 속도 (%)", value=85.0) / 100
     boost = st.selectbox("중상주의 (Double Time)", ["Yes", "No"], index=0)
     vp = st.selectbox("VP 보너스", ["Yes", "No"], index=0)
     hyena = st.selectbox("하이에나 보너스 (%)", [0, 5, 7, 9, 12, 15], index=5) / 100
 
-    st.markdown("---")
-    submitted = st.form_submit_button("\U0001f9ee 계산하기")
+# 버튼은 폼 외부로 이동
+submitted = st.button("\U0001f9ee 계산하기")
 
 if submitted:
     def secs_to_str(secs):
@@ -109,7 +99,6 @@ if submitted:
             total += subtotal
             per_building_result[b] = subtotal
 
-        st.markdown("---")
         boost_bonus = 0.2 if boost == "Yes" else 0
         vp_bonus = 0.1 if vp == "Yes" else 0
         adjusted = total / (1 + cs + vp_bonus + hyena + boost_bonus)
