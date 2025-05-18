@@ -6,6 +6,16 @@ st.set_page_config(page_title="건설 가속 계산기", layout="centered")
 
 # --- FC 레벨 매핑 (코드 내 포함)
 fc_map = {
+    1: "1", 2: "2", 3: "3", 4: "4",
+    5: "5", 6: "6", 7: "7", 8: "8",
+    9: "9", 10: "10", 11: "11", 12: "12",
+    13: "13", 14: "14", 15: "15", 16: "16",   
+    17: "17", 18: "18", 19: "19", 20: "20",
+    21: "21", 22: "22", 23: "23", 24: "24",
+    25: "25", 26: "26", 27: "27", 28: "28",
+    29: "29",30: "30", 
+    30-1: "30-1", 30-2: "30-2",30-3: "30-3",30-4: "30-4",
+    
     35: "FC1", 36: "FC1-1", 37: "FC1-2", 38: "FC1-3",
     39: "FC2", 40: "FC2-1", 41: "FC2-2", 42: "FC2-3",
     43: "FC3", 44: "FC3-1", 45: "FC3-2", 46: "FC3-3",
@@ -49,8 +59,8 @@ level_dict = {
 st.title("🏗️ 건설 가속 계산기")
 st.caption("선택한 건물의 레벨 구간과 버프를 기반으로 총 건설 시간을 계산합니다.")
 
+# 🔹 건설 목표 구간
 st.markdown("### 🧱 건설 목표")
-
 selected_levels = {}
 
 with st.form("build_form"):
@@ -60,7 +70,6 @@ with st.form("build_form"):
 
         lv_df = level_dict[b]
         level_list = lv_df["fc_level"].astype(str).tolist()
-
         default_idx = next((i for i, v in enumerate(level_list) if "FC7" in v), 0)
 
         st.markdown(f"**🏛 {b}**")
@@ -73,12 +82,16 @@ with st.form("build_form"):
         if start != end:
             selected_levels[b] = (start, end)
 
-    st.markdown("### ⚙️ 버프 설정")
+    # 🔹 버프 입력 구간
+    st.markdown("---")
+    st.markdown("### 🧰 버프 입력")
     cs = st.number_input("기본 건설 속도 (%)", value=85.0) / 100
     boost = st.selectbox("중상주의 (Double Time)", ["Yes", "No"], index=0)
     vp = st.selectbox("VP 보너스", ["Yes", "No"], index=0)
     hyena = st.selectbox("하이에나 보너스 (%)", [0, 5, 7, 9, 12, 15], index=5) / 100
 
+    # 🔹 버튼 구간
+    st.markdown("---")
     submitted = st.form_submit_button("🧮 계산하기")
 
 # --- 계산 결과 ---
