@@ -75,10 +75,10 @@ FC10,80,345600,War Academy
 28,28,377340,Marksman Camp
 29,29,433980,Marksman Camp
 30,30,520800,Marksman Camp
-01岿 30老,31,90720,Marksman Camp
-Feb-30,32,90720,Marksman Camp
-03岿 30老,33,90720,Marksman Camp
-04岿 30老,34,90720,Marksman Camp
+30-1,31,90720,Marksman Camp
+30-2,32,90720,Marksman Camp
+30-3,33,90720,Marksman Camp
+30-4,34,90720,Marksman Camp
 FC1,35,90720,Marksman Camp
 FC1-1,36,116640,Marksman Camp
 FC1-2,37,116640,Marksman Camp
@@ -155,10 +155,10 @@ FC10,80,259200,Marksman Camp
 28,28,377340,Lancer Camp
 29,29,433980,Lancer Camp
 30,30,520800,Lancer Camp
-01岿 30老,31,90720,Lancer Camp
-Feb-30,32,90720,Lancer Camp
-03岿 30老,33,90720,Lancer Camp
-04岿 30老,34,90720,Lancer Camp
+30-1,31,90720,Lancer Camp
+30-2,32,90720,Lancer Camp
+30-3,33,90720,Lancer Camp
+30-4,34,90720,Lancer Camp
 FC1,35,90720,Lancer Camp
 FC1-1,36,116640,Lancer Camp
 FC1-2,37,116640,Lancer Camp
@@ -235,10 +235,10 @@ FC10,80,259200,Lancer Camp
 28,28,377340,Infantry Camp
 29,29,433980,Infantry Camp
 30,30,520800,Infantry Camp
-01岿 30老,31,90720,Infantry Camp
-Feb-30,32,90720,Infantry Camp
-03岿 30老,33,90720,Infantry Camp
-04岿 30老,34,90720,Infantry Camp
+30-1,31,90720,Infantry Camp
+30-2,32,90720,Infantry Camp
+30-2,33,90720,Infantry Camp
+30-4,34,90720,Infantry Camp
 FC1,35,90720,Infantry Camp
 FC1-1,36,116640,Infantry Camp
 FC1-2,37,116640,Infantry Camp
@@ -315,10 +315,10 @@ FC10,80,259200,Infantry Camp
 28,28,352200,Infirmary
 29,29,405060,Infirmary
 30,30,486060,Infirmary
-01岿 30老,31,84660,Infirmary
-Feb-30,32,84660,Infirmary
-03岿 30老,33,84660,Infirmary
-04岿 30老,34,84660,Infirmary
+30-1,31,84660,Infirmary
+30-2,32,84660,Infirmary
+30-3,33,84660,Infirmary
+30-4,34,84660,Infirmary
 FC1,35,84660,Infirmary
 FC1-1,36,108840,Infirmary
 FC1-2,37,108840,Infirmary
@@ -395,10 +395,10 @@ FC10,80,241920,Infirmary
 28,28,1660500,Embassy
 29,29,1909560,Embassy
 30,30,2291520,Embassy
-01岿 30老,31,399120,Embassy
-Feb-30,32,399120,Embassy
-03岿 30老,33,399120,Embassy
-04岿 30老,34,399120,Embassy
+30-1,31,399120,Embassy
+30-2,32,399120,Embassy
+30-3,33,399120,Embassy
+30-4,34,399120,Embassy
 FC1,35,399120,Embassy
 FC1-1,36,513180,Embassy
 FC1-2,37,513180,Embassy
@@ -475,10 +475,10 @@ FC10,80,1140480,Embassy
 28,28,301860,Command Center
 29,29,347160,Command Center
 30,30,416640,Command Center
-01岿 30老,31,72570,Command Center
-Feb-30,32,72570,Command Center
-03岿 30老,33,72570,Command Center
-04岿 30老,34,72570,Command Center
+30-1,31,72570,Command Center
+30-2,32,72570,Command Center
+30-3,33,72570,Command Center
+30-4,34,72570,Command Center
 FC1,35,72570,Command Center
 FC1-1,36,93300,Command Center
 FC1-2,37,93300,Command Center
@@ -525,112 +525,112 @@ FC9-2,77,207360,Command Center
 FC9-3,78,207360,Command Center
 FC9-4,79,207360,Command Center
 FC10,80,207360,Command Center
-FC1,1,2,Research Center
-FC2,2,9,Research Center
-FC3,3,45,Research Center
-FC4,4,135,Research Center
-FC5,5,270,Research Center
-FC6,6,540,Research Center
-FC7,7,1080,Research Center
-FC8,8,1620,Research Center
-FC9,9,2430,Research Center
-FC10,10,3240,Research Center
-FC11,11,4050,Research Center
-FC12,12,4860,Research Center
-FC13,13,5940,Research Center
-FC14,14,7560,Research Center
-FC15,15,9720,Research Center
-FC16,16,16440,Research Center
-FC17,17,19740,Research Center
-FC18,18,23700,Research Center
-FC19,19,35550,Research Center
-FC20,20,44430,Research Center
-FC21,21,57750,Research Center
-FC22,22,86640,Research Center
-FC23,23,121320,Research Center
-FC24,24,169860,Research Center
-FC25,25,237780,Research Center
-FC26,26,273420,Research Center
-FC27,27,328140,Research Center
-FC28,28,377340,Research Center
-FC29,29,433980,Research Center
-FC30,30,520800,Research Center
-2,2,6 ,Furnace
-3,3,60 ,Furnace
-4,4,180 ,Furnace
-5,5,600 ,Furnace
-6,6,1800 ,Furnace
-7,7,3600 ,Furnace
-8,8,9000 ,Furnace
-9,9,16200 ,Furnace
-10,10,21600 ,Furnace
-11,11,27000 ,Furnace
-12,12,32400 ,Furnace
-13,13,39600 ,Furnace
-14,14,50400 ,Furnace
-15,15,64800 ,Furnace
-16,16,109680 ,Furnace
-17,17,131640 ,Furnace
-18,18,157980 ,Furnace
-19,19,237000 ,Furnace
-20,20,296280 ,Furnace
-21,21,385140 ,Furnace
-22,22,577740 ,Furnace
-23,23,808800 ,Furnace
-24,24,1132380 ,Furnace
-25,25,1585320 ,Furnace
-26,26,1823160 ,Furnace
-27,27,2187780 ,Furnace
-28,28,2515920 ,Furnace
-29,29,2893320 ,Furnace
-30,30,3472020 ,Furnace
- 30-1 ,31,604800 ,Furnace
- 30-2 ,32,604800 ,Furnace
- 30-3 ,33,604800 ,Furnace
- 30-4 ,34,604800 ,Furnace
- FC1 ,35,604800 ,Furnace
- FC1-1 ,36,777600 ,Furnace
- FC1-2 ,37,777600 ,Furnace
- FC1-3 ,38,777600 ,Furnace
- FC1-4 ,39,777600 ,Furnace
- FC2 ,40,777600 ,Furnace
- FC2-1 ,41,950400 ,Furnace
- FC2-2 ,42,950400 ,Furnace
- FC2-3 ,43,950400 ,Furnace
- FC2-4 ,44,950400 ,Furnace
- FC3 ,45,950400 ,Furnace
- FC3-1 ,46,1036800 ,Furnace
- FC3-2 ,47,1036800 ,Furnace
- FC3-3 ,48,1036800 ,Furnace
- FC3-4 ,49,1036800 ,Furnace
- FC4 ,50,1036800 ,Furnace
- FC4-1 ,51,1209600 ,Furnace
- FC4-2 ,52,1209600 ,Furnace
- FC4-3 ,53,1209600 ,Furnace
+1,1,2,Research Center
+2,2,9,Research Center
+3,3,45,Research Center
+4,4,135,Research Center
+5,5,270,Research Center
+6,6,540,Research Center
+7,7,1080,Research Center
+8,8,1620,Research Center
+9,9,2430,Research Center
+10,10,3240,Research Center
+11,11,4050,Research Center
+12,12,4860,Research Center
+13,13,5940,Research Center
+14,14,7560,Research Center
+15,15,9720,Research Center
+16,16,16440,Research Center
+17,17,19740,Research Center
+18,18,23700,Research Center
+19,19,35550,Research Center
+20,20,44430,Research Center
+21,21,57750,Research Center
+22,22,86640,Research Center
+23,23,121320,Research Center
+24,24,169860,Research Center
+25,25,237780,Research Center
+26,26,273420,Research Center
+27,27,328140,Research Center
+28,28,377340,Research Center
+29,29,433980,Research Center
+30,30,520800,Research Center
+2,2,6,Furnace
+3,3,60,Furnace
+4,4,180,Furnace
+5,5,600,Furnace
+6,6,1800,Furnace
+7,7,3600,Furnace
+8,8,9000,Furnace
+9,9,16200,Furnace
+10,10,21600,Furnace
+11,11,27000,Furnace
+12,12,32400,Furnace
+13,13,39600,Furnace
+14,14,50400,Furnace
+15,15,64800,Furnace
+16,16,109680,Furnace
+17,17,131640,Furnace
+18,18,157980,Furnace
+19,19,237000,Furnace
+20,20,296280,Furnace
+21,21,385140,Furnace
+22,22,577740,Furnace
+23,23,808800,Furnace
+24,24,1132380,Furnace
+25,25,1585320,Furnace
+26,26,1823160,Furnace
+27,27,2187780,Furnace
+28,28,2515920,Furnace
+29,29,2893320,Furnace
+30,30,3472020,Furnace
+ 30-1 ,31,604800,Furnace
+ 30-2 ,32,604800,Furnace
+ 30-3 ,33,604800,Furnace
+ 30-4 ,34,604800,Furnace
+ FC1 ,35,604800,Furnace
+ FC1-1 ,36,777600,Furnace
+ FC1-2 ,37,777600,Furnace
+ FC1-3 ,38,777600,Furnace
+ FC1-4 ,39,777600,Furnace
+ FC2 ,40,777600,Furnace
+ FC2-1 ,41,950400,Furnace
+ FC2-2 ,42,950400,Furnace
+ FC2-3 ,43,950400,Furnace
+ FC2-4 ,44,950400,Furnace
+ FC3 ,45,950400,Furnace
+ FC3-1 ,46,1036800,Furnace
+ FC3-2 ,47,1036800,Furnace
+ FC3-3 ,48,1036800,Furnace
+ FC3-4 ,49,1036800,Furnace
+ FC4 ,50,1036800,Furnace
+ FC4-1 ,51,1209600,Furnace
+ FC4-2 ,52,1209600,Furnace
+ FC4-3 ,53,1209600,Furnace
  FC4-4 ,54,1209600 ,Furnace
- FC5 ,55,1209600 ,Furnace
- FC5-1 ,56,1296000 ,Furnace
- FC5-2 ,57,1296000 ,Furnace
- FC5-3 ,58,1296000 ,Furnace
- FC5-4 ,59,1296000 ,Furnace
- FC6 ,60,1296000 ,Furnace
- FC6-1 ,61,1555200 ,Furnace
- FC6-2 ,62,1555200 ,Furnace
- FC6-3 ,63,1555200 ,Furnace
- FC6-4 ,64,1555200 ,Furnace
- FC7 ,65,1555200 ,Furnace
- FC7-1 ,66,1728000 ,Furnace
- FC7-2 ,67,1728000 ,Furnace
- FC7-3 ,68,1728000 ,Furnace
- FC7-4 ,69,1728000 ,Furnace
- FC8 ,70,1728000 ,Furnace
- FC8-1 ,71,1123200 ,Furnace
- FC8-2 ,72,1123200 ,Furnace
- FC8-3 ,73,1123200 ,Furnace
- FC8-4 ,74,1123200 ,Furnace
- FC9 ,75,1123200 ,Furnace
- FC9-1 ,76,1728000 ,Furnace
- FC9-2 ,77,1728000 ,Furnace
- FC9-3 ,78,1728000 ,Furnace
- FC9-4 ,79,1728000 ,Furnace
- FC10 ,80,1728000 ,Furnace
+ FC5 ,55,1209600,Furnace
+ FC5-1 ,56,1296000,Furnace
+ FC5-2 ,57,1296000,Furnace
+ FC5-3 ,58,1296000,Furnace
+ FC5-4 ,59,1296000,Furnace
+ FC6 ,60,1296000,Furnace
+ FC6-1 ,61,1555200,Furnace
+ FC6-2 ,62,1555200,Furnace
+ FC6-3 ,63,1555200,Furnace
+ FC6-4 ,64,1555200,Furnace
+ FC7 ,65,1555200,Furnace
+ FC7-1 ,66,1728000,Furnace
+ FC7-2 ,67,1728000,Furnace
+ FC7-3 ,68,1728000,Furnace
+ FC7-4 ,69,1728000,Furnace
+ FC8 ,70,1728000,Furnace
+ FC8-1 ,71,1123200,Furnace
+ FC8-2 ,72,1123200,Furnace
+ FC8-3 ,73,1123200,Furnace
+ FC8-4 ,74,1123200,Furnace
+ FC9,75,1123200,Furnace
+ FC9-1 ,76,1728000,Furnace
+ FC9-2 ,77,1728000,Furnace
+ FC9-3 ,78,1728000,Furnace
+ FC9-4 ,79,1728000,Furnace
+ FC10 ,80,1728000,Furnace
