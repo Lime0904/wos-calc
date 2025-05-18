@@ -5,7 +5,7 @@ import os
 # --- 페이지 설정 ---
 st.set_page_config(page_title="건설 가속 계산기", layout="centered")
 
-# --- 데이터 로드 ---
+# --- 데이터 로딩 ---
 def load_data():
     path = "data/build_time_clean.csv"
     if not os.path.exists(path):
@@ -15,25 +15,23 @@ def load_data():
 
 df = load_data()
 
-# --- 헤더 ---
-st.title("🏗️ 건설 가속 계산기")
-st.caption("각 건물의 현재/목표 레벨과 버프 정보를 입력하면 총 건설 시간을 계산합니다.")
-
-# --- 건설 속도 가이드 ---
-with st.expander("📘 기본 건설 속도 확인 방법"):
-    st.markdown("""
-    **경로:**  
-    ▶️ 좌측 상단 프로필 옆 주먹 아이콘 → 보너스 보기 → [발전] 탭 → 건설 속도 확인
-
-    ℹ️ 참고: 집행관 버프가 포함된 수치입니다.
-    """)
-
-# --- 건물 목록 준비 ---
+# --- 레벨 매핑 딕셔너리 ---
 buildings = sorted(df["Building"].unique())
 level_dict = {
     b: df[df["Building"] == b][["level", "numerical"]].drop_duplicates().sort_values("numerical").reset_index(drop=True)
     for b in buildings
 }
+
+# --- 제목 및 가이드 ---
+st.title("🏗️ 건설 가속 계산기")
+st.caption("각 건물의 현재/목표 레벨과 버프 정보를 입력하면 총 건설 시간을 계산합니다.")
+
+with st.expander("📘 기본 건설 속도 확인 방법"):
+    st.markdown("""
+    ▶️ 좌측 상단 프로필 옆 **주먹 아이콘** 클릭 → **보너스 보기** → **[발전] 탭** → **건설 속도 확인**
+
+    ℹ️ 참고: 집행관 버프가 포함된 수치입니다.
+    """)
 
 # --- 입력 UI ---
 st.subheader("🧱 건물별 현재/목표 레벨 선택")
@@ -42,14 +40,17 @@ selected_levels = {}
 
 with st.form("building_form"):
     for b in buildings:
-        levels = level_dict[b]["level"].tolist()
-        default_idx = level_dict[b][level_dict[b]["level"] == "FC7"].index[0] if "FC7" in levels else 0
+        levels_df = level_dict[b]
+        level_list = levels_df["level"].tolist()
+        default_idx = levels_df[levels_df["level"] == "FC7"].index[0] if "FC7" in level_list else 0
+
         st.markdown(f"**🏛 {b}**")
         col1, col2 = st.columns(2)
         with col1:
-            start = st.selectbox(f"{b} 현재 레벨", levels, index=default_idx, key=f"{b}_start")
+            start = st.selectbox(f"{b} 현재 레벨", level_list, index=default_idx, key=f"{b}_start")
         with col2:
-            end = st.selectbox(f"{b} 목표 레벨", levels, index=default_idx, key=f"{b}_end")
+            end = st.selectbox(f"{b} 목표 레벨", level_list, index=default_idx, key=f"{b}_end")
+
         if start != end:
             selected_levels[b] = (start, end)
 
@@ -100,7 +101,7 @@ if submitted:
             st.dataframe(subset[["level", "시간"]].set_index("level"), use_container_width=True)
             st.markdown(f"🔹 해당 구간 소요 시간: `{secs_to_str(subtotal)}`")
 
-        # 버프 계산
+        # 버프 반영
         boost_bonus = 0.2 if boost == "Yes" else 0
         vp_bonus = 0.1 if vp == "Yes" else 0
         adjusted = total_secs / (1 + cs + vp_bonus + hyena + boost_bonus)
