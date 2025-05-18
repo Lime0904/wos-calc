@@ -117,7 +117,8 @@ if submitted:
 
         boost_bonus = 0.2 if boost == "Yes" else 0
         vp_bonus = 0.1 if vp == "Yes" else 0
-        adjusted = total / (1 + cs + vp_bonus + hyena + boost_bonus)
+        speed_total = 1 + cs + vp_bonus + hyena
+        adjusted = (total / speed_total) * (1 - boost_bonus)
 
         st.markdown("### ✅ 최종 건설 시간")
         st.success(f"⚡ **Adjusted Time:** {secs_to_str(adjusted)}")
