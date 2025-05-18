@@ -5,6 +5,7 @@ import pandas as pd
 st.set_page_config(page_title="건설 가속 계산기", layout="centered")
 
 # --- FC 레벨 매핑 (코드 내 포함)
+# --- FC 레벨 매핑 (코드 내 포함)
 fc_map = {
     1: "1", 2: "2", 3: "3", 4: "4",
     5: "5", 6: "6", 7: "7", 8: "8",
@@ -59,7 +60,7 @@ level_dict = {
 st.title("🏗️ 건설 가속 계산기")
 st.caption("선택한 건물의 레벨 구간과 버프를 기반으로 총 건설 시간을 계산합니다.")
 
-# 🔹 건설 목표 구간
+# --- 건설 목표 구간 ---
 st.markdown("### 🧱 건설 목표")
 selected_levels = {}
 
@@ -82,7 +83,16 @@ with st.form("build_form"):
         if start != end:
             selected_levels[b] = (start, end)
 
-    # 🔹 버프 입력 구간
+    # --- 가이드 삽입 ---
+    with st.expander("📘 내 기본 건설 속도 확인 방법 가이드"):
+        st.markdown("""
+        **확인 경로:**  
+        ▶️ 좌측 상단 프로필 옆 **주먹 아이콘** 클릭 → **보너스 보기** → **[발전] 탭** → **건설 속도 확인**
+
+        ℹ️ 참고: **집행관 버프**가 적용되어 있을 경우 이 수치에 포함되어 표시됩니다.
+        """)
+
+    # --- 버프 입력 구간 ---
     st.markdown("---")
     st.markdown("### 🧰 버프 입력")
     cs = st.number_input("기본 건설 속도 (%)", value=85.0) / 100
@@ -90,7 +100,7 @@ with st.form("build_form"):
     vp = st.selectbox("VP 보너스", ["Yes", "No"], index=0)
     hyena = st.selectbox("하이에나 보너스 (%)", [0, 5, 7, 9, 12, 15], index=5) / 100
 
-    # 🔹 버튼 구간
+    # --- 계산 버튼 ---
     st.markdown("---")
     submitted = st.form_submit_button("🧮 계산하기")
 
@@ -125,16 +135,15 @@ if submitted:
             per_building_result[b] = subtotal
 
         # --- 결과 출력 ---
-        st.markdown("---")
         boost_bonus = 0.2 if boost == "Yes" else 0
         vp_bonus = 0.1 if vp == "Yes" else 0
         adjusted = total / (1 + cs + vp_bonus + hyena + boost_bonus)
 
         st.markdown("### ✅ 최종 건설 시간")
-        st.success(f"⚡ **Adjusted Time:** {secs_to_str(adjusted)}")
+        st.success(f"⚡ **보정된 시간 (Adjusted Time):** {secs_to_str(adjusted)}")
 
-        st.markdown("### ⏱️ Unboosted Time (총합)")
-        for b in ordered_buildings:
-            if b in per_building_result:
-                st.markdown(f"- **{b}**: {secs_to_str(per_building_result[b])}")
-        st.info(f"🕒 **총합:** {secs_to_str(total)}")
+        with st.expander("⏱️ Unboosted Time (참고용)"):
+            st.info(f"🕒 총합: {secs_to_str(total)}")
+            for b in ordered_buildings:
+                if b in per_building_result:
+                    st.markdown(f"- **{b}**: {secs_to_str(per_building_result[b])}")
