@@ -7,15 +7,26 @@ st.set_page_config(page_title="건설 가속 계산기", layout="centered")
 # --- 데이터 불러오기 ---
 @st.cache_data
 def load_data():
-    return pd.read_csv("build_time.csv")
+    df = pd.read_csv("build_time_clean.csv")
+    return df
 
 build_time_df = load_data()
 
+# --- 공통 레벨 옵션 추출 ---
+level_options_map = {}
+for b in build_time_df["Building"].unique():
+    levels = (
+        build_time_df[build_time_df["Building"] == b]
+        .sort_values("numerical")[["level", "numerical"]]
+        .drop_duplicates()
+        .reset_index(drop=True)
+    )
+    level_options_map[b] = levels
+
 # --- 제목 및 안내 ---
 st.title("🏗️ 건설 가속 계산기")
-st.caption("건물, 레벨, 버프 정보를 입력하면 최종 건설 시간을 계산합니다.")
+st.caption("각 건물의 현재/목표 레벨과 버프 정보를 입력하면 최종 건설 시간을 계산합니다.")
 
-# --- 건설 속도 가이드 ---
 with st.expander("📘 기본 건설 속도 확인 방법"):
     st.markdown("""
     **확인 경로:**  
@@ -26,30 +37,26 @@ with st.expander("📘 기본 건설 속도 확인 방법"):
 
 # --- 입력 폼 ---
 with st.form("input_form"):
-    st.markdown("### 🧱 건물 및 레벨 선택")
+    st.markdown("### 🧱 건물별 현재/목표 레벨 선택")
 
-    # 전체 건물 목록 radio 버튼
-    buildings = sorted(build_time_df["Building"].unique())
-    selected_building = st.radio("건물", buildings, index=buildings.index("Infantry Camp"), label_visibility="collapsed")
+    selected_buildings = {}
+    for b in sorted(build_time_df["Building"].unique()):
+        levels = level_options_map[b]
+        default_index = levels[levels["level"] == "FC7"].index[0] if "FC7" in levels["level"].values else 0
 
-    # 해당 건물의 level 리스트
-    building_df = build_time_df[build_time_df["Building"] == selected_building]
-    level_options = building_df.sort_values("numerical")[["level", "numerical"]].drop_duplicates()
+        with st.expander(f"🏛 {b}"):
+            col1, col2 = st.columns(2)
+            with col1:
+                start_label = st.selectbox(f"{b} - 현재 레벨", levels["level"], key=f"{b}_start", index=default_index)
+            with col2:
+                end_label = st.selectbox(f"{b} - 목표 레벨", levels["level"], key=f"{b}_end", index=default_index)
 
-    # 기본값 FC7
-    default_index = level_options[level_options["level"] == "FC7"].index[0] if "FC7" in level_options["level"].values else 0
+            start_num = levels[levels["level"] == start_label]["numerical"].values[0]
+            end_num = levels[levels["level"] == end_label]["numerical"].values[0]
 
-    col1, col2 = st.columns(2)
-    with col1:
-        start_label = st.selectbox("시작 레벨", level_options["level"].tolist(), index=default_index)
-    with col2:
-        end_label = st.selectbox("목표 레벨", level_options["level"].tolist(), index=default_index)
+            if start_num != end_num:
+                selected_buildings[b] = (start_num, end_num)
 
-    # numerical 매핑
-    start_num = level_options[level_options["level"] == start_label]["numerical"].values[0]
-    end_num = level_options[level_options["level"] == end_label]["numerical"].values[0]
-
-    # 버프 설정
     st.markdown("### ⚙️ 버프 정보 입력")
     cs = st.number_input("🏗️ 기본 건설 속도 (%)", value=85.0, min_value=0.0) / 100
 
@@ -63,35 +70,46 @@ with st.form("input_form"):
 
     submitted = st.form_submit_button("🧮 계산하기")
 
-# --- 결과 출력 ---
-if submitted:
-    # 필터링 및 합산
-    filtered = building_df[
-        (building_df["numerical"] >= min(start_num, end_num)) &
-        (building_df["numerical"] <= max(start_num, end_num))
-    ]
+# --- 계산 및 결과 출력 ---
+if submitted and selected_buildings:
+    total_raw = 0
+    total_adjusted = 0
 
-    total_secs = filtered["Total"].sum()
+    st.markdown("---")
+    st.subheader("📤 계산 결과")
+
+    for b, (start, end) in selected_buildings.items():
+        filtered = build_time_df[
+            (build_time_df["Building"] == b) &
+            (build_time_df["numerical"] >= min(start, end)) &
+            (build_time_df["numerical"] <= max(start, end))
+        ].copy()
+
+        subtotal = filtered["Total"].sum()
+        total_raw += subtotal
+
+        # 시간 변환 함수
+        def secs_to_str(secs):
+            d = int(secs // 86400)
+            h = int((secs % 86400) // 3600)
+            m = int((secs % 3600) // 60)
+            s = int(secs % 60)
+            return f"{d}d {h}:{m:02}:{s:02}"
+
+        st.markdown(f"#### 🏛 {b}")
+        filtered["초"] = filtered["Total"].astype(int)
+        filtered["시간"] = filtered["초"].apply(secs_to_str)
+        st.dataframe(filtered[["level", "시간"]].set_index("level"), use_container_width=True)
+        st.markdown(f"🔹 이 구간 건설 시간: `{secs_to_str(subtotal)}`")
+
+    # 버프 반영
     boost_bonus = 0.2 if boost == "Yes" else 0
     vp_bonus = 0.1 if vp == "Yes" else 0
-    adjusted_secs = total_secs / (1 + cs + vp_bonus + hyena + boost_bonus)
+    adjusted = total_raw / (1 + cs + vp_bonus + hyena + boost_bonus)
 
-    # 시간 포맷 함수
-    def secs_to_str(secs):
-        d = int(secs // 86400)
-        h = int((secs % 86400) // 3600)
-        m = int((secs % 3600) // 60)
-        s = int(secs % 60)
-        return f"{d}d {h}:{m:02}:{s:02}"
-
-    # 결과 표시
-    st.markdown("---")
-    st.markdown("### ⏱️ 각 레벨별 건설 시간")
-    filtered_display = filtered.copy()
-    filtered_display["Seconds"] = filtered_display["Total"].astype(int)
-    filtered_display["시간"] = filtered_display["Seconds"].apply(secs_to_str)
-    st.dataframe(filtered_display[["level", "시간"]].set_index("level"), use_container_width=True)
-
+    # 결과 출력
     st.markdown("### 🧮 총 건설 시간")
-    st.info(f"🕒 Unboosted Time: {secs_to_str(total_secs)}")
-    st.success(f"⚡ Adjusted Time: {secs_to_str(adjusted_secs)}")
+    st.info(f"🕒 Unboosted Time: {secs_to_str(total_raw)}")
+    st.success(f"⚡ Adjusted Time: {secs_to_str(adjusted)}")
+elif submitted and not selected_buildings:
+    st.warning("⛔ 건물별 현재/목표 레벨이 동일합니다. 최소 하나 이상 레벨 구간을 선택해주세요.")
