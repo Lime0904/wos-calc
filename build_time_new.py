@@ -62,8 +62,9 @@ with st.form("build_form"):
         if b not in level_dict:
             continue
 
+        # numerical 기준 정렬된 fc_level 리스트 추출
         lv_df = level_dict[b].sort_values("numerical").reset_index(drop=True)
-        level_list = lv_df["fc_level"].astype(str).tolist()
+        level_list = lv_df["fc_level"].tolist()  # <- 문자열 변환 없이 그대로 사용
         default_idx = next((i for i, v in enumerate(level_list) if "FC7" in v), 0)
 
         st.markdown(f"**\U0001f3db {b}**")
