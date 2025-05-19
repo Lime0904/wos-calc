@@ -6,14 +6,10 @@ st.set_page_config(page_title="건설 가속 계산기", layout="wide")
 
 # 🔁 FC 레벨 매핑
 fc_map = {
-    1: "1", 2: "2", 3: "3", 4: "4",
-    5: "5", 6: "6", 7: "7", 8: "8",
-    9: "9", 10: "10", 11: "11", 12: "12",
-    13: "13", 14: "14", 15: "15", 16: "16",
-    17: "17", 18: "18", 19: "19", 20: "20",
-    21: "21", 22: "22", 23: "23", 24: "24",
-    25: "25", 26: "26", 27: "27", 28: "28",
-    29: "29", 30: "30", 31: "30-1", 32: "30-2",
+    1: "1", 2: "2", 3: "3", 4: "4", 5: "5", 6: "6", 7: "7", 8: "8",
+    9: "9", 10: "10", 11: "11", 12: "12", 13: "13", 14: "14", 15: "15", 16: "16",
+    17: "17", 18: "18", 19: "19", 20: "20", 21: "21", 22: "22", 23: "23", 24: "24",
+    25: "25", 26: "26", 27: "27", 28: "28", 29: "29", 30: "30", 31: "30-1", 32: "30-2",
     33: "30-3", 34: "30-4",
     35: "FC1", 36: "FC1-1", 37: "FC1-2", 38: "FC1-3", 39: "FC1-4",
     40: "FC2", 41: "FC2-1", 42: "FC2-2", 43: "FC2-3", 44: "FC2-4",
@@ -27,7 +23,7 @@ fc_map = {
     80: "FC10"
 }
 
-# 영어 → 한글 병기 이름 (War Academy만 변경)
+# 영어 → 한글 병기 이름
 building_labels = {
     "Furnace": "Furnace (용광로)",
     "Embassy": "Embassy (대사관)",
@@ -39,7 +35,6 @@ building_labels = {
     "Infirmary": "Infirmary (의무실)",
     "Research Center": "Research Center (연구소)"
 }
-
 ordered_buildings = list(building_labels.keys())
 
 @st.cache_data
@@ -66,21 +61,19 @@ selected_levels = {}
 
 with st.container():
     st.markdown("### 🎯 건설 목표")
-
     for b in ordered_buildings:
         if b not in level_dict:
             continue
-
         lv_df = level_dict[b]
         level_list = lv_df["fc_level"].tolist()
         default_idx = next((i for i, v in enumerate(level_list) if "FC7" in v), 0)
 
-        with st.expander(f"🏗️ {building_labels[b]}"):
-            start = st.selectbox("현재", level_list, index=default_idx, key=f"{b}_start")
-            end = st.selectbox("목표", level_list, index=default_idx, key=f"{b}_end")
+        st.markdown(f"**🏗️ {building_labels[b]}**")
+        start = st.selectbox("현재", level_list, index=default_idx, key=f"{b}_start")
+        end = st.selectbox("목표", level_list, index=default_idx, key=f"{b}_end")
 
-            if start != end:
-                selected_levels[b] = (start, end)
+        if start != end:
+            selected_levels[b] = (start, end)
 
 with st.container():
     st.markdown("### 🧪 버프 입력")
@@ -112,7 +105,6 @@ if submitted:
     else:
         total = 0
         per_building_result = {}
-
         for b, (start_fc, end_fc) in selected_levels.items():
             lv_df = level_dict[b]
             end_num = lv_df[lv_df["fc_level"] == end_fc]["numerical"].values[0]
@@ -130,11 +122,24 @@ if submitted:
         st.markdown("### ✅ 최종 건설 시간")
         st.success(f"⚡ **Adjusted Time:** {secs_to_str(adjusted)}")
 
+        with st.expander("📋 입력 요약"):
+            st.markdown(
+                f"""
+                - 🛠️ 건설 속도: {cs*100:.1f}%  
+                - 💥 중상주의: {'O' if boost == 'Yes' else 'X'}  
+                - 🎖️ VP: {'O' if vp == 'Yes' else 'X'}  
+                - 🐾 하이에나: {int(hyena*100)}%  
+                """
+            )
+            st.markdown("**📌 건설 구간:**")
+            for b, (start_fc, end_fc) in selected_levels.items():
+                st.markdown(f"- {building_labels[b]}: {start_fc} → {end_fc}")
+
         with st.expander("⏱️ Unboosted Time (참고용)"):
             st.info(f"🕒 총합: {secs_to_str(total)}")
             for b in ordered_buildings:
                 if b in per_building_result:
                     st.markdown(f"- **{building_labels[b]}**: {secs_to_str(per_building_result[b])}")
-                    
-              st.markdown("---")
+
+st.markdown("---")
 st.markdown("<div style='text-align:center; color: gray;'>🍋 Made with 💚 by <b>Lime</b></div>", unsafe_allow_html=True)
