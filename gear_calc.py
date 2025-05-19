@@ -105,7 +105,9 @@ with st.expander("선택사항: 패키지 구매 입력", expanded=False):
             label = f"{price} ({price_kor[price]})"
             count = cols[i].number_input(label=label, min_value=0, value=0, step=1, key=key)
             package_counts[key] = count
-        with st.expander(f"{artisan} 패키지 구성 보기"):
+
+        # expander는 컬럼 바깥에서 별도로 처리
+        with st.expander(f"{artisan} 패키지 구성 보기", expanded=False):
             pkg = packages_df[packages_df["Category"] == artisan]
             for price in price_list:
                 sub = pkg[pkg["Package"] == price]
@@ -122,7 +124,8 @@ with st.expander("선택사항: 패키지 구매 입력", expanded=False):
         label = f"{price} ({price_kor[price]})"
         count = dawn_cols[i].number_input(label=label, min_value=0, value=0, step=1, key=key)
         package_counts[key] = count
-    with st.expander("새벽시장 패키지 구성 보기"):
+
+    with st.expander("새벽시장 패키지 구성 보기", expanded=False):
         dawn = packages_df[packages_df["Category"] == "DawnMarket"]
         for price in price_list:
             sub = dawn[dawn["Package"] == price]
