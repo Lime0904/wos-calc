@@ -48,10 +48,20 @@ level_dict = {
     for b in ordered_buildings if b in df["Building"].unique()
 }
 
+# ✅ 모든 건물에서 가능한 fc_level 값을 집계
+level_set = set()
+for lv_df in level_dict.values():
+    level_set.update(lv_df["fc_level"].tolist())
+level_list = sorted(level_set, key=lambda x: list(fc_map.values()).index(x))
+
+def_fc = next((v for v in level_list if "FC7" in v), level_list[0])
+
+data = [{"건물명(Building)": building_labels[b], "현재 레벨(Current)": def_fc, "목표 레벨(Target)": def_fc} for b in ordered_buildings]
+df_input = pd.DataFrame(data)
+
 st.title("🏗️ 건설 가속 계산기")
 st.caption("건물별로 현재/목표 레벨을 표로 한 번에 설정하세요.")
 
-# 표 형태 입력 UI
 st.markdown("""
     <style>
     .stDataFrame tbody tr td {
@@ -74,12 +84,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-level_list = level_dict["Furnace"]["fc_level"].tolist()
-def_fc = next((v for v in level_list if "FC7" in v), level_list[0])
-
-data = [{"건물명": building_labels[b], "현재 레벨": def_fc, "목표 레벨": def_fc} for b in ordered_buildings]
-df_input = pd.DataFrame(data)
-
 with st.container():
     st.markdown("### 🏢 건물별 레벨 입력")
     edited_df = st.data_editor(
@@ -88,9 +92,9 @@ with st.container():
         num_rows="fixed",
         hide_index=True,
         column_config={
-            "건물명(Building)": st.column_config.TextColumn(disabled=True),
-            "현재 레벨(Current)": st.column_config.SelectboxColumn(options=level_list),
-            "목표 레벨(Target)": st.column_config.SelectboxColumn(options=level_list),
+            "건물명": st.column_config.TextColumn(disabled=True),
+            "현재 레벨": st.column_config.SelectboxColumn(options=level_list),
+            "목표 레벨": st.column_config.SelectboxColumn(options=level_list),
         }
     )
 
@@ -99,8 +103,8 @@ with st.container():
     st.markdown("### 🧪 버프 입력")
     cs = st.number_input("기본 건설 속도(%) (Your Constr Speed)", value=85.0) / 100
     boost = st.selectbox("중상주의 (Double Time)", ["Yes", "No"], index=0)
-    vp = st.selectbox("VP 보너스", ["Yes", "No"], index=0)
-    hyena = st.selectbox("하이에나 보너스(%) (Pet Skill)", [0, 5, 7, 9, 12, 15], index=5) / 100
+    vp = st.selectbox("부집행관 여부 (VP)", ["Yes", "No"], index=0)
+    hyena = st.selectbox("하이에나 보너스(%) (Pet skill)", [0, 5, 7, 9, 12, 15], index=5) / 100
 
 with st.expander("📘 내 기본 건설 속도 확인 방법 가이드"):
     st.markdown("""
@@ -150,6 +154,10 @@ if submitted:
         for b in ordered_buildings:
             if b in per_building_result:
                 st.markdown(f"- **{building_labels[b]}**: {secs_to_str(per_building_result[b])}")
+
+st.markdown("---")
+st.markdown("<div style='text-align:center; color: gray;'>🍋 Made with ❤️ by <b>Lime</b></div>", unsafe_allow_html=True)
+
 
 st.markdown("---")
 st.markdown("<div style='text-align:center; color: gray;'>🍋 Made with 💚 by <b>Lime</b></div>", unsafe_allow_html=True)
