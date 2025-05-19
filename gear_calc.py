@@ -51,10 +51,6 @@ st.title("영주 장비 자원 계산기")
 
 user_inputs = {}
 st.subheader("각 부위의 현재 / 목표 등급")
-
-for unit_type, parts in gear_groups.items():
-    st.markdown(f"#### {unit_type}")
-    for part in parts:
         part_label = gear_parts_kor[part]
         cols = st.columns(2)
         with cols[0]:
@@ -86,50 +82,52 @@ user_owned = {
 }
 
 st.markdown("---")
-st.subheader("선택사항: 패키지 구매 입력")
-st.caption("⚠️ PACKAGES 데이터는 업데이트가 필요한 예시입니다. 실제 구매 구성을 확인해 주세요!")
+# 선택사항: 패키지 구매 입력
+with st.expander("선택사항: 패키지 구매 입력", expanded=False):
+    st.caption("⚠️ PACKAGES 데이터는 업데이트가 필요한 예시입니다. 실제 구매 구성을 확인해 주세요!")
 
-price_list = ["$5", "$10", "$20", "$50", "$100"]
-price_kor = {"$5": "7,500원", "$10": "15,000원", "$20": "30,000원", "$50": "79,000원", "$100": "149,000원"}
+    price_list = ["$5", "$10", "$20", "$50", "$100"]
+    price_kor = {"$5": "7,500원", "$10": "15,000원", "$20": "30,000원", "$50": "79,000원", "$100": "149,000원"}
 
-package_counts = {}
-package_resources = {"Design": 0, "Alloy": 0, "Polish": 0, "Amber": 0, "Plans": 0, "DesignPlans": 0}
+    package_counts = {}
+    package_resources = {"Design": 0, "Alloy": 0, "Polish": 0, "Amber": 0, "Plans": 0, "DesignPlans": 0}
 
-st.markdown("### 📦 장인 패키지")
-artisan_types = ["Sublime", "Exquisite", "Classic"]
-for artisan in artisan_types:
-    st.markdown(f"**{artisan}**")
-    cols = st.columns(len(price_list))
+    st.markdown("### 📦 장인 패키지")
+    artisan_types = ["Sublime", "Exquisite", "Classic"]
+    for artisan in artisan_types:
+        st.markdown(f"**{artisan}**")
+        cols = st.columns(len(price_list))
+        for i, price in enumerate(price_list):
+            key = f"{artisan}_{price}"
+            label = f"{price} ({price_kor[price]})"
+            count = cols[i].number_input(label=label, min_value=0, value=0, step=1, key=key)
+            package_counts[key] = count
+        with st.expander(f"{artisan} 패키지 구성 보기"):
+            pkg = packages_df[packages_df["Category"] == artisan]
+            for price in price_list:
+                sub = pkg[pkg["Package"] == price]
+                if not sub.empty:
+                    st.markdown(f"**{price} ({price_kor[price]})**")
+                    for _, row in sub.iterrows():
+                        st.markdown(f"- {row['Resource']}: {int(row['Amount'])}")
+
+    st.markdown("### 🌙 새벽시장")
+    st.markdown("디자인 도면 전용")
+    dawn_cols = st.columns(len(price_list))
     for i, price in enumerate(price_list):
-        key = f"{artisan}_{price}"
+        key = f"DawnMarket_{price}"
         label = f"{price} ({price_kor[price]})"
-        count = cols[i].number_input(label=label, min_value=0, value=0, step=1, key=key)
+        count = dawn_cols[i].number_input(label=label, min_value=0, value=0, step=1, key=key)
         package_counts[key] = count
-    with st.expander(f"{artisan} 패키지 구성 보기"):
-        pkg = packages_df[packages_df["Category"] == artisan]
+    with st.expander("새벽시장 패키지 구성 보기"):
+        dawn = packages_df[packages_df["Category"] == "DawnMarket"]
         for price in price_list:
-            sub = pkg[pkg["Package"] == price]
+            sub = dawn[dawn["Package"] == price]
             if not sub.empty:
                 st.markdown(f"**{price} ({price_kor[price]})**")
                 for _, row in sub.iterrows():
                     st.markdown(f"- {row['Resource']}: {int(row['Amount'])}")
 
-st.markdown("### 🌙 새벽시장")
-st.markdown("디자인 도면 전용")
-dawn_cols = st.columns(len(price_list))
-for i, price in enumerate(price_list):
-    key = f"DawnMarket_{price}"
-    label = f"{price} ({price_kor[price]})"
-    count = dawn_cols[i].number_input(label=label, min_value=0, value=0, step=1, key=key)
-    package_counts[key] = count
-with st.expander("새벽시장 패키지 구성 보기"):
-    dawn = packages_df[packages_df["Category"] == "DawnMarket"]
-    for price in price_list:
-        sub = dawn[dawn["Package"] == price]
-        if not sub.empty:
-            st.markdown(f"**{price} ({price_kor[price]})**")
-            for _, row in sub.iterrows():
-                st.markdown(f"- {row['Resource']}: {int(row['Amount'])}")
 
 # 패키지 자원 계산
 for key, count in package_counts.items():
