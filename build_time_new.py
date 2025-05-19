@@ -1,23 +1,33 @@
 import streamlit as st
 import pandas as pd
 
+# 📱 모바일 최적화를 위한 layout 설정
 st.set_page_config(page_title="건설 가속 계산기", layout="wide")
 
-# 🍋 레벨 매핑 (표시용)
+# 🔁 FC 레벨 매핑
 fc_map = {
-    1: "1", 2: "2", 3: "3", 4: "4", 5: "5", 6: "6", 7: "7", 8: "8",
-    9: "9", 10: "10", 11: "11", 12: "12", 13: "13", 14: "14", 15: "15", 16: "16",
-    17: "17", 18: "18", 19: "19", 20: "20", 21: "21", 22: "22", 23: "23", 24: "24",
-    25: "25", 26: "26", 27: "27", 28: "28", 29: "29", 30: "30", 31: "30-1", 32: "30-2",
-    33: "30-3", 34: "30-4", 35: "FC1", 36: "FC1-1", 37: "FC1-2", 38: "FC1-3", 39: "FC1-4",
-    40: "FC2", 41: "FC2-1", 42: "FC2-2", 43: "FC2-3", 44: "FC2-4", 45: "FC3", 46: "FC3-1",
-    47: "FC3-2", 48: "FC3-3", 49: "FC3-4", 50: "FC4", 51: "FC4-1", 52: "FC4-2", 53: "FC4-3", 54: "FC4-4",
-    55: "FC5", 56: "FC5-1", 57: "FC5-2", 58: "FC5-3", 59: "FC5-4", 60: "FC6", 61: "FC6-1", 62: "FC6-2",
-    63: "FC6-3", 64: "FC6-4", 65: "FC7", 66: "FC7-1", 67: "FC7-2", 68: "FC7-3", 69: "FC7-4",
-    70: "FC8", 71: "FC8-1", 72: "FC8-2", 73: "FC8-3", 74: "FC8-4", 75: "FC9", 76: "FC9-1",
-    77: "FC9-2", 78: "FC9-3", 79: "FC9-4", 80: "FC10"
+    1: "1", 2: "2", 3: "3", 4: "4",
+    5: "5", 6: "6", 7: "7", 8: "8",
+    9: "9", 10: "10", 11: "11", 12: "12",
+    13: "13", 14: "14", 15: "15", 16: "16",
+    17: "17", 18: "18", 19: "19", 20: "20",
+    21: "21", 22: "22", 23: "23", 24: "24",
+    25: "25", 26: "26", 27: "27", 28: "28",
+    29: "29", 30: "30", 31: "30-1", 32: "30-2",
+    33: "30-3", 34: "30-4",
+    35: "FC1", 36: "FC1-1", 37: "FC1-2", 38: "FC1-3", 39: "FC1-4",
+    40: "FC2", 41: "FC2-1", 42: "FC2-2", 43: "FC2-3", 44: "FC2-4",
+    45: "FC3", 46: "FC3-1", 47: "FC3-2", 48: "FC3-3", 49: "FC3-4",
+    50: "FC4", 51: "FC4-1", 52: "FC4-2", 53: "FC4-3", 54: "FC4-4",
+    55: "FC5", 56: "FC5-1", 57: "FC5-2", 58: "FC5-3", 59: "FC5-4",
+    60: "FC6", 61: "FC6-1", 62: "FC6-2", 63: "FC6-3", 64: "FC6-4",
+    65: "FC7", 66: "FC7-1", 67: "FC7-2", 68: "FC7-3", 69: "FC7-4",
+    70: "FC8", 71: "FC8-1", 72: "FC8-2", 73: "FC8-3", 74: "FC8-4",
+    75: "FC9", 76: "FC9-1", 77: "FC9-2", 78: "FC9-3", 79: "FC9-4",
+    80: "FC10"
 }
 
+# 영어 → 한글 병기 이름 (War Academy만 변경)
 building_labels = {
     "Furnace": "Furnace (용광로)",
     "Embassy": "Embassy (대사관)",
@@ -29,6 +39,7 @@ building_labels = {
     "Infirmary": "Infirmary (의무실)",
     "Research Center": "Research Center (연구소)"
 }
+
 ordered_buildings = list(building_labels.keys())
 
 @st.cache_data
@@ -48,66 +59,35 @@ level_dict = {
     for b in ordered_buildings if b in df["Building"].unique()
 }
 
-# ✅ 각 건물에 개별 레벨 리스트 생성
-level_options = {b: lv_df["fc_level"].tolist() for b, lv_df in level_dict.items()}
-def_fc = next((v for v in list(fc_map.values()) if "FC7" in v), list(fc_map.values())[0])
-
-data = [
-    {
-        "건물명(Building)": building_labels[b],
-        "현재 레벨(Current)": def_fc,
-        "목표 레벨(Target)": def_fc,
-    } for b in ordered_buildings
-]
-df_input = pd.DataFrame(data)
-
 st.title("🏗️ 건설 가속 계산기")
-st.caption("건물별로 현재/목표 레벨을 표로 한 번에 설정하세요.")
+st.caption("목표 구간만 계산됩니다. 건물별로 현재와 목표 레벨을 선택하세요.")
 
-st.markdown("""
-    <style>
-    .stDataFrame tbody tr td {
-        text-align: center;
-    }
-    thead tr th:first-child { display: none }
-    tbody th { display: none }
-    .st-emotion-cache-1ov7g5e {
-        background-color: #f8f9fa;
-        border: 1px solid #dee2e6;
-        border-radius: 10px;
-        padding: 1rem;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-    .st-emotion-cache-1ov7g5e .element-container .stDataFrame td, 
-    .st-emotion-cache-1ov7g5e .element-container .stDataFrame th {
-        text-align: center !important;
-        vertical-align: middle !important;
-    }
-    </style>
-""", unsafe_allow_html=True)
+selected_levels = {}
 
 with st.container():
-    st.markdown("### 🏢 건물별 레벨 입력")
-    # column_config에서 공통 옵션이 아닌, 단일 level_list로 설정 (제한적이지만 Streamlit 현재 제약상 해결법)
-    edited_df = st.data_editor(
-        df_input,
-        use_container_width=True,
-        num_rows="fixed",
-        hide_index=True,
-        column_config={
-            "건물명(Building)": st.column_config.TextColumn(disabled=True),
-            "현재 레벨(Current)": st.column_config.SelectboxColumn(options=list(fc_map.values())),
-            "목표 레벨(Target)": st.column_config.SelectboxColumn(options=list(fc_map.values())),
-        }
-    )
+    st.markdown("### 🎯 건설 목표")
 
-# 버프 입력
+    for b in ordered_buildings:
+        if b not in level_dict:
+            continue
+
+        lv_df = level_dict[b]
+        level_list = lv_df["fc_level"].tolist()
+        default_idx = next((i for i, v in enumerate(level_list) if "FC7" in v), 0)
+
+        with st.expander(f"🏗️ {building_labels[b]}"):
+            start = st.selectbox("현재", level_list, index=default_idx, key=f"{b}_start")
+            end = st.selectbox("목표", level_list, index=default_idx, key=f"{b}_end")
+
+            if start != end:
+                selected_levels[b] = (start, end)
+
 with st.container():
     st.markdown("### 🧪 버프 입력")
-    cs = st.number_input("기본 건설 속도(%) (Your Constr Speed)", value=85.0) / 100
+    cs = st.number_input("기본 건설 속도(Your Constr Speed) (%)", value=85.0) / 100
     boost = st.selectbox("중상주의 (Double Time)", ["Yes", "No"], index=0)
-    vp = st.selectbox("부집행관 여부 (VP)", ["Yes", "No"], index=0)
-    hyena = st.selectbox("하이에나 보너스(%) (Pet skill)", [0, 5, 7, 9, 12, 15], index=5) / 100
+    vp = st.selectbox("VP 보너스", ["Yes", "No"], index=0)
+    hyena = st.selectbox("하이에나 보너스(Pet Skill) (%)", [0, 5, 7, 9, 12, 15], index=5) / 100
 
 with st.expander("📘 내 기본 건설 속도 확인 방법 가이드"):
     st.markdown("""
@@ -127,36 +107,34 @@ if submitted:
         s = int(secs % 60)
         return f"{d}d {h}:{m:02}:{s:02}"
 
-    total = 0
-    per_building_result = {}
+    if not selected_levels:
+        st.warning("⚠️ 최소 한 건물이라도 구간을 선택해주세요.")
+    else:
+        total = 0
+        per_building_result = {}
 
-    for _, row in edited_df.iterrows():
-        b = [k for k, v in building_labels.items() if v == row["건물명(Building)"]][0]
-        start, end = row["현재 레벨(Current)"], row["목표 레벨(Target)"]
-        if start == end:
-            continue
+        for b, (start_fc, end_fc) in selected_levels.items():
+            lv_df = level_dict[b]
+            end_num = lv_df[lv_df["fc_level"] == end_fc]["numerical"].values[0]
+            start_num = lv_df[lv_df["fc_level"] == start_fc]["numerical"].values[0]
+            sub_df = df[(df["Building"] == b) & (df["numerical"] > start_num) & (df["numerical"] <= end_num)]
+            subtotal = sub_df["Total"].sum()
+            total += subtotal
+            per_building_result[b] = subtotal
 
-        lv_df = level_dict[b]
-        start_num = lv_df[lv_df["fc_level"] == start]["numerical"].values[0]
-        end_num = lv_df[lv_df["fc_level"] == end]["numerical"].values[0]
-        sub_df = df[(df["Building"] == b) & (df["numerical"] > start_num) & (df["numerical"] <= end_num)]
-        subtotal = sub_df["Total"].sum()
-        total += subtotal
-        per_building_result[b] = subtotal
+        boost_bonus = 0.2 if boost == "Yes" else 0
+        vp_bonus = 0.1 if vp == "Yes" else 0
+        speed_total = 1 + cs + vp_bonus + hyena
+        adjusted = (total / speed_total) * (1 - boost_bonus)
 
-    boost_bonus = 0.2 if boost == "Yes" else 0
-    vp_bonus = 0.1 if vp == "Yes" else 0
-    speed_total = 1 + cs + vp_bonus + hyena
-    adjusted = (total / speed_total) * (1 - boost_bonus)
+        st.markdown("### ✅ 최종 건설 시간")
+        st.success(f"⚡ **Adjusted Time:** {secs_to_str(adjusted)}")
 
-    st.markdown("### ✅ 최종 건설 시간")
-    st.success(f"⚡ Adjusted Time: {secs_to_str(adjusted)}")
-
-    with st.expander("⏱️ Unboosted Time (참고용)"):
-        st.info(f"🕒 총합: {secs_to_str(total)}")
-        for b in ordered_buildings:
-            if b in per_building_result:
-                st.markdown(f"- **{building_labels[b]}**: {secs_to_str(per_building_result[b])}")
+        with st.expander("⏱️ Unboosted Time (참고용)"):
+            st.info(f"🕒 총합: {secs_to_str(total)}")
+            for b in ordered_buildings:
+                if b in per_building_result:
+                    st.markdown(f"- **{building_labels[b]}**: {secs_to_str(per_building_result[b])}")
 
 st.markdown("---")
 st.markdown("<div style='text-align:center; color: gray;'>🍋 Made with 💚 by <b>Lime</b></div>", unsafe_allow_html=True)
