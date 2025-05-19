@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-from io import StringIO
 
 # CSV 데이터 로딩
 gear_df = pd.read_csv("data/gear_data.csv")
@@ -59,9 +58,21 @@ for unit_type, parts in gear_groups.items():
         part_label = gear_parts_kor[part]
         cols = st.columns(2)
         with cols[0]:
-            cur = st.selectbox(f"{part_label} - 현재 등급", options=gear_levels, index=gear_levels.index("Gold"), key=f"{part}_cur")
+            cur = st.selectbox(
+                f"{part_label} - 현재 등급", 
+                options=gear_levels, 
+                index=gear_levels.index("Gold"), 
+                key=f"{part}_cur",
+                format_func=lambda x: level_labels.get(x, x)
+            )
         with cols[1]:
-            tar = st.selectbox(f"{part_label} - 목표 등급", options=gear_levels, index=gear_levels.index("Gold"), key=f"{part}_tar")
+            tar = st.selectbox(
+                f"{part_label} - 목표 등급", 
+                options=gear_levels, 
+                index=gear_levels.index("Gold"), 
+                key=f"{part}_tar",
+                format_func=lambda x: level_labels.get(x, x)
+            )
         user_inputs[part_label] = (cur, tar)
 
 st.markdown("---")
@@ -163,7 +174,6 @@ if st.button("부족 자원 계산"):
 
     result_df = pd.DataFrame(result_data)
     st.dataframe(result_df, use_container_width=True)
-
 
 st.markdown("---")
 st.markdown("<div style='text-align:center; color: gray;'>🍋 Made with 💚 by <b>Lime</b></div>", unsafe_allow_html=True)
