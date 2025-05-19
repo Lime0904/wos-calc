@@ -48,15 +48,17 @@ level_dict = {
     for b in ordered_buildings if b in df["Building"].unique()
 }
 
-# ✅ 모든 건물에서 가능한 fc_level 값을 집계
-level_set = set()
-for lv_df in level_dict.values():
-    level_set.update(lv_df["fc_level"].tolist())
-level_list = sorted(level_set, key=lambda x: list(fc_map.values()).index(x))
+# ✅ 각 건물에 개별 레벨 리스트 생성
+level_options = {b: lv_df["fc_level"].tolist() for b, lv_df in level_dict.items()}
+def_fc = next((v for v in list(fc_map.values()) if "FC7" in v), list(fc_map.values())[0])
 
-def_fc = next((v for v in level_list if "FC7" in v), level_list[0])
-
-data = [{"건물명(Building)": building_labels[b], "현재 레벨(Current)": def_fc, "목표 레벨(Target)": def_fc} for b in ordered_buildings]
+data = [
+    {
+        "건물명(Building)": building_labels[b],
+        "현재 레벨(Current)": def_fc,
+        "목표 레벨(Target)": def_fc,
+    } for b in ordered_buildings
+]
 df_input = pd.DataFrame(data)
 
 st.title("🏗️ 건설 가속 계산기")
@@ -86,15 +88,16 @@ st.markdown("""
 
 with st.container():
     st.markdown("### 🏢 건물별 레벨 입력")
+    # column_config에서 공통 옵션이 아닌, 단일 level_list로 설정 (제한적이지만 Streamlit 현재 제약상 해결법)
     edited_df = st.data_editor(
         df_input,
         use_container_width=True,
         num_rows="fixed",
         hide_index=True,
         column_config={
-            "건물명": st.column_config.TextColumn(disabled=True),
-            "현재 레벨": st.column_config.SelectboxColumn(options=level_list),
-            "목표 레벨": st.column_config.SelectboxColumn(options=level_list),
+            "건물명(Building)": st.column_config.TextColumn(disabled=True),
+            "현재 레벨(Current)": st.column_config.SelectboxColumn(options=list(fc_map.values())),
+            "목표 레벨(Target)": st.column_config.SelectboxColumn(options=list(fc_map.values())),
         }
     )
 
@@ -128,8 +131,8 @@ if submitted:
     per_building_result = {}
 
     for _, row in edited_df.iterrows():
-        b = [k for k, v in building_labels.items() if v == row["건물명"]][0]
-        start, end = row["현재 레벨"], row["목표 레벨"]
+        b = [k for k, v in building_labels.items() if v == row["건물명(Building)"]][0]
+        start, end = row["현재 레벨(Current)"], row["목표 레벨(Target)"]
         if start == end:
             continue
 
@@ -154,10 +157,6 @@ if submitted:
         for b in ordered_buildings:
             if b in per_building_result:
                 st.markdown(f"- **{building_labels[b]}**: {secs_to_str(per_building_result[b])}")
-
-st.markdown("---")
-st.markdown("<div style='text-align:center; color: gray;'>🍋 Made with ❤️ by <b>Lime</b></div>", unsafe_allow_html=True)
-
 
 st.markdown("---")
 st.markdown("<div style='text-align:center; color: gray;'>🍋 Made with 💚 by <b>Lime</b></div>", unsafe_allow_html=True)
