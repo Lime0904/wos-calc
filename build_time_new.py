@@ -57,11 +57,19 @@ st.markdown("""
     .stDataFrame tbody tr td {
         text-align: center;
     }
-    .st-emotion-cache-1ov7g5e {  /* fix box height */
+    thead tr th:first-child { display: none }
+    tbody th { display: none }
+    .st-emotion-cache-1ov7g5e {
         background-color: #f8f9fa;
-        border: 1px solid #ddd;
+        border: 1px solid #dee2e6;
         border-radius: 10px;
         padding: 1rem;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .st-emotion-cache-1ov7g5e .element-container .stDataFrame td, 
+    .st-emotion-cache-1ov7g5e .element-container .stDataFrame th {
+        text-align: center !important;
+        vertical-align: middle !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -78,20 +86,29 @@ with st.container():
         df_input,
         use_container_width=True,
         num_rows="fixed",
+        hide_index=True,
         column_config={
-            "건물명": st.column_config.TextColumn(disabled=True),
-            "현재 레벨": st.column_config.SelectboxColumn(options=level_list),
-            "목표 레벨": st.column_config.SelectboxColumn(options=level_list),
+            "건물명(Building)": st.column_config.TextColumn(disabled=True),
+            "현재 레벨(Current)": st.column_config.SelectboxColumn(options=level_list),
+            "목표 레벨(Target)": st.column_config.SelectboxColumn(options=level_list),
         }
     )
 
 # 버프 입력
 with st.container():
     st.markdown("### 🧪 버프 입력")
-    cs = st.number_input("기본 건설 속도(%)", value=85.0) / 100
+    cs = st.number_input("기본 건설 속도(%) (Your Constr Speed)", value=85.0) / 100
     boost = st.selectbox("중상주의 (Double Time)", ["Yes", "No"], index=0)
     vp = st.selectbox("VP 보너스", ["Yes", "No"], index=0)
-    hyena = st.selectbox("하이에나 보너스(%)", [0, 5, 7, 9, 12, 15], index=5) / 100
+    hyena = st.selectbox("하이에나 보너스(%) (Pet Skill)", [0, 5, 7, 9, 12, 15], index=5) / 100
+
+with st.expander("📘 내 기본 건설 속도 확인 방법 가이드"):
+    st.markdown("""
+    **확인 경로:**  
+    ▶️ 좌측 상단 프로필 옆 **주먹 아이콘** 클릭 → **보너스 보기** → **[발전] 탭** → **건설 속도 확인**
+
+    ℹ️ 참고: **집행관 버프**가 적용되어 있을 경우 이 수치에 포함되어 표시됩니다.
+    """)
 
 submitted = st.button("🧮 계산하기")
 
