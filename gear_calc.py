@@ -48,7 +48,7 @@ gear_parts_kor = {
     "Cudgel": "지팡이"
 }
 
-st.title("지휘관 장비 자원 계산기")
+st.title("영주 장비 자원 계산기")
 
 user_inputs = {}
 st.subheader("각 부위의 현재 / 목표 등급")
