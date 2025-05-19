@@ -85,18 +85,17 @@ user_owned = {
     "Amber": res_cols[3].number_input("앰버", min_value=0, value=0),
 }
 
-# 선택사항 - 패키지 입력 섹션 (기본 숨김)
+# 패키지 관련 전역 변수
+price_list = ["$5", "$10", "$20", "$50", "$100"]
+price_kor = {"$5": "7,500원", "$10": "15,000원", "$20": "30,000원", "$50": "79,000원", "$100": "149,000원"}
+artisan_types = ["Sublime", "Exquisite", "Classic"]
+package_counts = {}
+package_resources = {"Design": 0, "Alloy": 0, "Polish": 0, "Amber": 0, "Plans": 0, "DesignPlans": 0}
+
+# ✅ 패키지 수량 입력 (숨김처리)
 with st.expander("선택사항: 패키지 구매 입력", expanded=False):
     st.caption("⚠️ PACKAGES 데이터는 업데이트가 필요한 예시입니다. 실제 구매 구성을 확인해 주세요!")
-
-    price_list = ["$5", "$10", "$20", "$50", "$100"]
-    price_kor = {"$5": "7,500원", "$10": "15,000원", "$20": "30,000원", "$50": "79,000원", "$100": "149,000원"}
-
-    package_counts = {}
-    package_resources = {"Design": 0, "Alloy": 0, "Polish": 0, "Amber": 0, "Plans": 0, "DesignPlans": 0}
-
     st.markdown("### 📦 장인 패키지")
-    artisan_types = ["Sublime", "Exquisite", "Classic"]
     for artisan in artisan_types:
         st.markdown(f"**{artisan}**")
         cols = st.columns(len(price_list))
@@ -106,18 +105,7 @@ with st.expander("선택사항: 패키지 구매 입력", expanded=False):
             count = cols[i].number_input(label=label, min_value=0, value=0, step=1, key=key)
             package_counts[key] = count
 
-        # expander는 컬럼 바깥에서 별도로 처리
-        with st.expander(f"{artisan} 패키지 구성 보기", expanded=False):
-            pkg = packages_df[packages_df["Category"] == artisan]
-            for price in price_list:
-                sub = pkg[pkg["Package"] == price]
-                if not sub.empty:
-                    st.markdown(f"**{price} ({price_kor[price]})**")
-                    for _, row in sub.iterrows():
-                        st.markdown(f"- {row['Resource']}: {int(row['Amount'])}")
-
     st.markdown("### 🌙 새벽시장")
-    st.markdown("디자인 도면 전용")
     dawn_cols = st.columns(len(price_list))
     for i, price in enumerate(price_list):
         key = f"DawnMarket_{price}"
@@ -125,14 +113,28 @@ with st.expander("선택사항: 패키지 구매 입력", expanded=False):
         count = dawn_cols[i].number_input(label=label, min_value=0, value=0, step=1, key=key)
         package_counts[key] = count
 
-    with st.expander("새벽시장 패키지 구성 보기", expanded=False):
-        dawn = packages_df[packages_df["Category"] == "DawnMarket"]
+# ✅ 패키지 구성 보기 (expander 밖)
+st.markdown("---")
+st.subheader("패키지 구성 상세 보기")
+
+for artisan in artisan_types:
+    with st.expander(f"📦 {artisan} 패키지 구성 보기", expanded=False):
+        pkg = packages_df[packages_df["Category"] == artisan]
         for price in price_list:
-            sub = dawn[dawn["Package"] == price]
+            sub = pkg[pkg["Package"] == price]
             if not sub.empty:
                 st.markdown(f"**{price} ({price_kor[price]})**")
                 for _, row in sub.iterrows():
                     st.markdown(f"- {row['Resource']}: {int(row['Amount'])}")
+
+with st.expander("🌙 새벽시장 패키지 구성 보기", expanded=False):
+    dawn = packages_df[packages_df["Category"] == "DawnMarket"]
+    for price in price_list:
+        sub = dawn[dawn["Package"] == price]
+        if not sub.empty:
+            st.markdown(f"**{price} ({price_kor[price]})**")
+            for _, row in sub.iterrows():
+                st.markdown(f"- {row['Resource']}: {int(row['Amount'])}")
 
 # 패키지 자원 계산
 for key, count in package_counts.items():
