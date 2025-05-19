@@ -100,3 +100,7 @@ if st.button("Calculate Deficit"):
 
     result_df = pd.DataFrame(result_data)
     st.dataframe(result_df, use_container_width=True)
+
+
+st.markdown("---")
+st.markdown("<div style='text-align:center; color: gray;'>🍋 Made with 💚 by <b>Lime</b></div>", unsafe_allow_html=True)
