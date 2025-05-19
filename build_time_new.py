@@ -3,7 +3,7 @@ import pandas as pd
 
 st.set_page_config(page_title="건설 가속 계산기", layout="wide")
 
-# 레벨 매핑 (표시용)
+# 🍋 레벨 매핑 (표시용)
 fc_map = {
     1: "1", 2: "2", 3: "3", 4: "4", 5: "5", 6: "6", 7: "7", 8: "8",
     9: "9", 10: "10", 11: "11", 12: "12", 13: "13", 14: "14", 15: "15", 16: "16",
@@ -52,22 +52,38 @@ st.title("🏗️ 건설 가속 계산기")
 st.caption("건물별로 현재/목표 레벨을 표로 한 번에 설정하세요.")
 
 # 표 형태 입력 UI
+st.markdown("""
+    <style>
+    .stDataFrame tbody tr td {
+        text-align: center;
+    }
+    .st-emotion-cache-1ov7g5e {  /* fix box height */
+        background-color: #f8f9fa;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 1rem;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
 level_list = level_dict["Furnace"]["fc_level"].tolist()
 def_fc = next((v for v in level_list if "FC7" in v), level_list[0])
 
 data = [{"건물명": building_labels[b], "현재 레벨": def_fc, "목표 레벨": def_fc} for b in ordered_buildings]
 df_input = pd.DataFrame(data)
 
-edited_df = st.data_editor(
-    df_input,
-    use_container_width=True,
-    num_rows="fixed",
-    column_config={
-        "건물명": st.column_config.TextColumn(disabled=True),
-        "현재 레벨": st.column_config.SelectboxColumn(options=level_list),
-        "목표 레벨": st.column_config.SelectboxColumn(options=level_list),
-    }
-)
+with st.container():
+    st.markdown("### 🏢 건물별 레벨 입력")
+    edited_df = st.data_editor(
+        df_input,
+        use_container_width=True,
+        num_rows="fixed",
+        column_config={
+            "건물명": st.column_config.TextColumn(disabled=True),
+            "현재 레벨": st.column_config.SelectboxColumn(options=level_list),
+            "목표 레벨": st.column_config.SelectboxColumn(options=level_list),
+        }
+    )
 
 # 버프 입력
 with st.container():
@@ -119,4 +135,4 @@ if submitted:
                 st.markdown(f"- **{building_labels[b]}**: {secs_to_str(per_building_result[b])}")
 
 st.markdown("---")
-st.markdown("<div style='text-align:center; color: gray;'>🍋 Made with ❤️ by <b>Lime</b></div>", unsafe_allow_html=True)
+st.markdown("<div style='text-align:center; color: gray;'>🍋 Made with 💚 by <b>Lime</b></div>", unsafe_allow_html=True)
