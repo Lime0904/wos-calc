@@ -51,21 +51,25 @@ st.title("영주 장비 자원 계산기")
 
 user_inputs = {}
 st.subheader("각 부위의 현재 / 목표 등급")
+
+for unit_type, parts in gear_groups.items():
+    st.markdown(f"#### {unit_type}")
+    for part in parts:
         part_label = gear_parts_kor[part]
         cols = st.columns(2)
         with cols[0]:
             cur = st.selectbox(
-                f"{part_label} - 현재 등급", 
-                options=gear_levels, 
-                index=gear_levels.index("Gold"), 
+                f"{part_label} - 현재 등급",
+                options=gear_levels,
+                index=gear_levels.index("Gold"),
                 key=f"{part}_cur",
                 format_func=lambda x: level_labels.get(x, x)
             )
         with cols[1]:
             tar = st.selectbox(
-                f"{part_label} - 목표 등급", 
-                options=gear_levels, 
-                index=gear_levels.index("Gold"), 
+                f"{part_label} - 목표 등급",
+                options=gear_levels,
+                index=gear_levels.index("Gold"),
                 key=f"{part}_tar",
                 format_func=lambda x: level_labels.get(x, x)
             )
@@ -81,8 +85,7 @@ user_owned = {
     "Amber": res_cols[3].number_input("앰버", min_value=0, value=0),
 }
 
-st.markdown("---")
-# 선택사항: 패키지 구매 입력
+# 선택사항 - 패키지 입력 섹션 (기본 숨김)
 with st.expander("선택사항: 패키지 구매 입력", expanded=False):
     st.caption("⚠️ PACKAGES 데이터는 업데이트가 필요한 예시입니다. 실제 구매 구성을 확인해 주세요!")
 
@@ -127,7 +130,6 @@ with st.expander("선택사항: 패키지 구매 입력", expanded=False):
                 st.markdown(f"**{price} ({price_kor[price]})**")
                 for _, row in sub.iterrows():
                     st.markdown(f"- {row['Resource']}: {int(row['Amount'])}")
-
 
 # 패키지 자원 계산
 for key, count in package_counts.items():
