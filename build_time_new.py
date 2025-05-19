@@ -61,25 +61,30 @@ selected_levels = {}
 
 with st.container():
     st.markdown("### 🎯 건설 목표")
-    for b in ordered_buildings:
-        if b not in level_dict:
-            continue
-        lv_df = level_dict[b]
-        level_list = lv_df["fc_level"].tolist()
-        default_idx = next((i for i, v in enumerate(level_list) if "FC7" in v), 0)
 
-        st.markdown(f"**🏗️ {building_labels[b]}**")
-        start = st.selectbox("현재", level_list, index=default_idx, key=f"{b}_start")
-        end = st.selectbox("목표", level_list, index=default_idx, key=f"{b}_end")
-
-        if start != end:
-            selected_levels[b] = (start, end)
+    for i in range(0, len(ordered_buildings), 2):
+        cols = st.columns(2)
+        for j in range(2):
+            if i + j >= len(ordered_buildings):
+                continue
+            b = ordered_buildings[i + j]
+            if b not in level_dict:
+                continue
+            lv_df = level_dict[b]
+            level_list = lv_df["fc_level"].tolist()
+            default_idx = next((k for k, v in enumerate(level_list) if "FC7" in v), 0)
+            with cols[j]:
+                st.markdown(f"**🏗️ {building_labels[b]}**")
+                start = st.selectbox("현재(Current)", level_list, index=default_idx, key=f"{b}_start")
+                end = st.selectbox("목표(Target)", level_list, index=default_idx, key=f"{b}_end")
+                if start != end:
+                    selected_levels[b] = (start, end)
 
 with st.container():
     st.markdown("### 🧪 버프 입력")
     cs = st.number_input("기본 건설 속도(Your Constr Speed) (%)", value=85.0) / 100
     boost = st.selectbox("중상주의 (Double Time)", ["Yes", "No"], index=0)
-    vp = st.selectbox("VP 보너스", ["Yes", "No"], index=0)
+    vp = st.selectbox("부집행관 (VP)", ["Yes", "No"], index=0)
     hyena = st.selectbox("하이에나 보너스(Pet Skill) (%)", [0, 5, 7, 9, 12, 15], index=5) / 100
 
 with st.expander("📘 내 기본 건설 속도 확인 방법 가이드"):
@@ -125,10 +130,10 @@ if submitted:
         with st.expander("📋 입력 요약"):
             st.markdown(
                 f"""
-                - 🛠️ 건설 속도: {cs*100:.1f}%  
-                - 💥 중상주의: {'O' if boost == 'Yes' else 'X'}  
-                - 🎖️ VP: {'O' if vp == 'Yes' else 'X'}  
-                - 🐾 하이에나: {int(hyena*100)}%  
+                - Constr Speed: {cs*100:.1f}%  
+                - Double Time: {'O' if boost == 'Yes' else 'X'}  
+                - VP: {'O' if vp == 'Yes' else 'X'}  
+                - Hyena: {int(hyena*100)}%  
                 """
             )
             st.markdown("**📌 건설 구간:**")
